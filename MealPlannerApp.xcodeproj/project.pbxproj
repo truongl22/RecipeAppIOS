@@ -21,6 +21,11 @@
 		668DCD4C2A4E016A00FF8F3C /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD4B2A4E016A00FF8F3C /* HomeView.swift */; };
 		668DCD4E2A4E017600FF8F3C /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD4D2A4E017600FF8F3C /* SearchView.swift */; };
 		668DCD502A4E073F00FF8F3C /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD4F2A4E073F00FF8F3C /* SearchResultTableViewCell.swift */; };
+		668DCD592A526FFF00FF8F3C /* RecipesByIngredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD582A526FFE00FF8F3C /* RecipesByIngredients.swift */; };
+		668DCD5B2A52732600FF8F3C /* RecipeInstructions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD5A2A52732600FF8F3C /* RecipeInstructions.swift */; };
+		668DCD5D2A5352A300FF8F3C /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD5C2A5352A300FF8F3C /* Service.swift */; };
+		668DCD5F2A5352B000FF8F3C /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD5E2A5352B000FF8F3C /* Request.swift */; };
+		668DCD612A5352BF00FF8F3C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD602A5352BF00FF8F3C /* Endpoint.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +45,11 @@
 		668DCD4B2A4E016A00FF8F3C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		668DCD4D2A4E017600FF8F3C /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		668DCD4F2A4E073F00FF8F3C /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
+		668DCD582A526FFE00FF8F3C /* RecipesByIngredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesByIngredients.swift; sourceTree = "<group>"; };
+		668DCD5A2A52732600FF8F3C /* RecipeInstructions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInstructions.swift; sourceTree = "<group>"; };
+		668DCD5C2A5352A300FF8F3C /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		668DCD5E2A5352B000FF8F3C /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		668DCD602A5352BF00FF8F3C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +145,8 @@
 		668DCD532A513A3200FF8F3C /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				668DCD582A526FFE00FF8F3C /* RecipesByIngredients.swift */,
+				668DCD5A2A52732600FF8F3C /* RecipeInstructions.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +161,9 @@
 		668DCD552A513A6600FF8F3C /* APIClient */ = {
 			isa = PBXGroup;
 			children = (
+				668DCD5C2A5352A300FF8F3C /* Service.swift */,
+				668DCD5E2A5352B000FF8F3C /* Request.swift */,
+				668DCD602A5352BF00FF8F3C /* Endpoint.swift */,
 			);
 			path = APIClient;
 			sourceTree = "<group>";
@@ -242,10 +257,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				668DCD2D2A4B768C00FF8F3C /* MainTabBarViewController.swift in Sources */,
+				668DCD5F2A5352B000FF8F3C /* Request.swift in Sources */,
+				668DCD592A526FFF00FF8F3C /* RecipesByIngredients.swift in Sources */,
+				668DCD5D2A5352A300FF8F3C /* Service.swift in Sources */,
 				668DCD3F2A4CC6F500FF8F3C /* SearchViewController.swift in Sources */,
+				668DCD612A5352BF00FF8F3C /* Endpoint.swift in Sources */,
 				668DCD502A4E073F00FF8F3C /* SearchResultTableViewCell.swift in Sources */,
 				668DCD452A4CCDAD00FF8F3C /* HealthTrackViewController.swift in Sources */,
 				668DCD4C2A4E016A00FF8F3C /* HomeView.swift in Sources */,
+				668DCD5B2A52732600FF8F3C /* RecipeInstructions.swift in Sources */,
 				668DCD4A2A4CDDA600FF8F3C /* RecipeTableViewCell.swift in Sources */,
 				668DCD432A4CCD9500FF8F3C /* PlannerViewController.swift in Sources */,
 				668DCD292A4B768C00FF8F3C /* AppDelegate.swift in Sources */,
