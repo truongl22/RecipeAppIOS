@@ -11,6 +11,8 @@ class HealthTrackViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Health Track"
+        navigationController?.navigationBar.prefersLargeTitles = true
 
         // Do any additional setup after loading the view.
     }

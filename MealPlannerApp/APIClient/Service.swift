@@ -25,7 +25,7 @@ final class Service{
     ///   - request: a request created from Request class
     ///   - type: type we expect
     ///   - completion: callback with data or error
-    public func execute<T: Codable>(_ request: Request, expecting type: T.Type, completion: @escaping (Result<T, Error>) -> Void){
+    public func execute<T: Codable>(_ request: Request, expecting type: T.Type, completion: @escaping (Result<Array<T>, Error>) -> Void){
         guard var urlRequest = self.request(from: request) else{
             completion(.failure(errorNoti.CreateRequestError))
             return
@@ -37,30 +37,25 @@ final class Service{
             }
             // Decode
             do{
-//                let jsonObject = try JSONSerialization.jsonObject(with: data)
-//                print(String(describing: jsonObject))
-
                 let json = try JSONDecoder().decode(Array<T>.self, from: data)
-                print(String(describing: json))
-//                completion(.success(json[0]))
+                completion(.success(json))
             }
             catch{
                 completion(.failure(error))
             }
         }
         dataTask.resume()
-        
     }
     
     private func request(from foodRequest: Request) -> URLRequest? {
-            guard let url = foodRequest.url else {
-                return nil
-            }
-            var request = URLRequest(url: url)
-            request.httpMethod = foodRequest.httpGetMethod
-            request.addValue(apiKey, forHTTPHeaderField: "x-api-key")
-            return request
+        guard let url = foodRequest.url else {
+            return nil
         }
+        var request = URLRequest(url: url)
+        request.httpMethod = foodRequest.httpGetMethod
+        request.addValue(apiKey, forHTTPHeaderField: "x-api-key")
+        return request
+    }
     
     
 }
