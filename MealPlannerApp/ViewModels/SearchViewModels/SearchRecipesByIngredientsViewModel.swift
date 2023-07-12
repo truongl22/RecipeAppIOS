@@ -8,23 +8,38 @@
 import Foundation
 import UIKit
 
+protocol SearchRecipesByIngredientsViewModelProtocol: AnyObject{
+    func didLoad()
+    func selectedRecipe(recipe: RecipesByIngredients)
+}
+
 final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
+
+    public weak var delegate: SearchRecipesByIngredientsViewModelProtocol?
+    
     
     private var recipe: [RecipesByIngredients] = []{
-        
+        didSet{
+            for i in recipe{
+                let model = SearchRecipesCollectionViewCellViewModel(foodName: i.title , foodImageURL:  URL(string: i.image))
+                recipeCellViewModel.append(model)
+            }
+        }
     }
     private var recipeCellViewModel: [SearchRecipesCollectionViewCellViewModel] = []
     
     public func fetchRecipesByIngredients(){
-        let query1 = URLQueryItem(name: "ingredients", value: "Apple")
-        let query2 = URLQueryItem(name: "number", value: "2")
+        let query1 = URLQueryItem(name: "ingredients", value: "egg")
+        let query2 = URLQueryItem(name: "number", value: "50")
         let request = Request(endpoint: Endpoint.findByIngredients, queryParameters: [query1,query2])
         
         Service.shared.execute(request, expecting: RecipesByIngredients.self){ [weak self] result in
             switch result{
             case .success(let resultModel):
-                print(String(describing: resultModel))
                 self?.recipe = resultModel
+                DispatchQueue.main.async {
+                    self?.delegate?.didLoad()
+                }
                 break
             case .failure(let error):
                 print(String(describing: error))
@@ -34,14 +49,14 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return recipeCellViewModel.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchResultCollectionViewCell.identifier, for: indexPath) as? SearchResultCollectionViewCell else{
            fatalError("Unsupported Cell")
         }
-        let model = SearchRecipesCollectionViewCellViewModel(foodName: "ngonn", foodImageURL: URL(string: "https://spoonacular.com/recipeImages/633547-312x231.jpg"))
+        let model = recipeCellViewModel[indexPath.row]
         cell.configure(with: model)
         return cell
         
@@ -52,8 +67,14 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
         let width = (bounds.width - 30)/2
         return CGSize(
             width: width,
-            height: width * 1.5
+            height: width * 1.25
         )
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let recipe = recipe[indexPath.row]
+        delegate?.selectedRecipe(recipe: recipe)
     }
     
 }

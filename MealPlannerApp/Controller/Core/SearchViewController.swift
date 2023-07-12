@@ -7,7 +7,15 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, SearchResultViewDelegate {
+    
+    ///  send recipe to detail screen
+    func sendRecipeDetailToController(view: SearchResultView, selectedRecipe recipe: RecipesByIngredients) {
+        let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
+        let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
+        navigationController?.pushViewController(detailRecipeViewController, animated: true)
+    }
+    
     
     private let searchResultView = SearchResultView()
     
@@ -16,14 +24,12 @@ class SearchViewController: UIViewController {
         title = "Search"
         navigationController?.navigationBar.prefersLargeTitles = true
         view.addSubview(searchResultView)
-        NSLayoutConstraint.activate([
-            searchResultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            searchResultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            searchResultView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            searchResultView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
-        ])
-
-     
+        setUpView()
+    }
+    
+    private func setUpView(){
+        searchResultView.pin(to: view)
+        searchResultView.delegate = self
     }
     
     

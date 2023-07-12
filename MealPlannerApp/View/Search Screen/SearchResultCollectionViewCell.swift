@@ -13,7 +13,8 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     
     private let recipeImageResult: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -21,7 +22,8 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
     private let recipeNameLabel: UILabel = {
         let name = UILabel()
         name.textColor = .label
-        name.font = .systemFont(ofSize: 18, weight: .medium)
+        name.font = .systemFont(ofSize: 16, weight: .medium)
+        name.backgroundColor = .secondarySystemBackground
         name.translatesAutoresizingMaskIntoConstraints = false
         return name
     }()
@@ -31,22 +33,38 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         contentView.backgroundColor = .secondarySystemBackground
         contentView.addSubViews(recipeImageResult, recipeNameLabel)
         initConstraints()
+        styleForCell()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func styleForCell(){
+        contentView.layer.cornerRadius = 12
+        contentView.layer.masksToBounds = true
+        contentView.layer.shadowColor = UIColor.gray.cgColor
+        contentView.layer.shadowOffset = .zero
+        contentView.layer.shadowRadius = 4.0
+        contentView.layer.shadowOpacity = 0.4
+    }
+    
     private func initConstraints(){
-        recipeImageResult.pin(to: contentView)
+//        recipeImageResult.pin(to: contentView)
+        
         NSLayoutConstraint.activate([
-            recipeNameLabel.heightAnchor.constraint(equalToConstant: 50),
-            recipeNameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 5),
-            recipeNameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -5),
-            recipeNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
+            recipeNameLabel.heightAnchor.constraint(equalToConstant: 40),
+            recipeNameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
+            recipeNameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),
+            recipeNameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -3),
+            
+            recipeImageResult.bottomAnchor.constraint(equalTo: recipeNameLabel.topAnchor, constant: -3),
+            recipeImageResult.topAnchor.constraint(equalTo: contentView.topAnchor),
+            recipeImageResult.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            recipeImageResult.leftAnchor.constraint(equalTo: contentView.leftAnchor),
+            
         ])
-        recipeNameLabel.backgroundColor = .red
-        recipeImageResult.backgroundColor = .green
+
     }
     
     override func prepareForReuse() {

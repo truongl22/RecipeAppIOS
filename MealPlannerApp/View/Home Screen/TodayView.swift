@@ -8,41 +8,38 @@
 import UIKit
 
 class TodayView: UIView {
-    private let cardTableViewManager = CardTableViewManager()
+    private let cardCollectionViewManager = CardCollectionViewManager()
 
-//    private var cardsTableView: UITableView = {
-//        let tableView = UITableView(frame: .zero, style: .plain)
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-////        tableView.separatorStyle = .none
-//        tableView.register(TodayWorkOutTableViewCell.self, forCellReuseIdentifier: TodayWorkOutTableViewCell.identifier)
-//        return tableView
-//    }()
+    private var cardsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(TodayWorkOutCollectionViewCell.self, forCellWithReuseIdentifier: TodayWorkOutCollectionViewCell.identifier)
+        collectionView.register(MealPlannerCollectionViewCell.self, forCellWithReuseIdentifier: MealPlannerCollectionViewCell.identifier)
+        collectionView.register(GroceryCollectionViewCell.self, forCellWithReuseIdentifier: GroceryCollectionViewCell.identifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .systemBackground
-//        self.addSubViews(cardsTableView)
-//        setUpCardCollectionView()
+        self.addSubViews(cardsCollectionView)
+        setUpCardCollectionView()
 
         initConstraints()
    
     }
-//    
+    
     private func initConstraints(){
-        NSLayoutConstraint.activate([
-//            cardsTableView.topAnchor.constraint(equalTo: topAnchor),
-//            cardsTableView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            cardsTableView.leftAnchor.constraint(equalTo: leftAnchor),
-//            cardsTableView.rightAnchor.constraint(equalTo: rightAnchor),
-        ])
+        cardsCollectionView.pin(to: self)
     }
-//    
-//    private func setUpCardCollectionView(){
-//        cardsTableView.dataSource = cardTableViewManager
-//        cardsTableView.delegate = cardTableViewManager
-//    }
-//    
+    
+    private func setUpCardCollectionView(){
+        cardsCollectionView.dataSource = cardCollectionViewManager
+        cardsCollectionView.delegate = cardCollectionViewManager
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

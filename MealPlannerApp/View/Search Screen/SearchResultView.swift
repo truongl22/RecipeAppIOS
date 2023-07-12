@@ -7,8 +7,15 @@
 
 import UIKit
 
+protocol SearchResultViewDelegate: AnyObject{
+    func sendRecipeDetailToController(view: SearchResultView, selectedRecipe recipe: RecipesByIngredients)
+    
+}
+
 /// a class that handle showing list of recipe
 final class SearchResultView: UIView {
+    public weak var delegate: SearchResultViewDelegate?
+    
     private let searchRecipesByIngrdeintsViewModel = SearchRecipesByIngredientsViewModel()
 
 //    private let recipeSearchBar: UISearchBar = {
@@ -20,7 +27,7 @@ final class SearchResultView: UIView {
     
     private let recipeInCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.isHidden = false
 //        collection.alpha = 0
@@ -36,6 +43,8 @@ final class SearchResultView: UIView {
         self.addSubview(recipeInCollectionView)
         setUprecipeInCollectionView()
         initConstraints()
+        searchRecipesByIngrdeintsViewModel.delegate = self
+//        searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
    
     }
     
@@ -57,5 +66,17 @@ final class SearchResultView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+}
+
+extension SearchResultView:  SearchRecipesByIngredientsViewModelProtocol{
+    func selectedRecipe(recipe: RecipesByIngredients) {
+        delegate?.sendRecipeDetailToController(view: self, selectedRecipe: recipe)
+    }
+    
+    func didLoad() {
+        recipeInCollectionView.reloadData()
+    }
+    
     
 }

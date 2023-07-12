@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		668ADB532A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB522A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift */; };
+		668ADB552A5CABF700AD76AE /* DetailRecipeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB542A5CABF700AD76AE /* DetailRecipeViewController.swift */; };
+		668ADB582A5CADF100AD76AE /* RecipeDetaiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB572A5CADF100AD76AE /* RecipeDetaiView.swift */; };
+		668ADB5A2A5CAE3900AD76AE /* RecipeDetailViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB592A5CAE3900AD76AE /* RecipeDetailViewViewModel.swift */; };
+		668ADB5E2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB5D2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift */; };
+		668ADB602A5E208200AD76AE /* GroceryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB5F2A5E208200AD76AE /* GroceryCollectionViewCell.swift */; };
+		668ADB622A5E570900AD76AE /* TodayWorkOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB612A5E570900AD76AE /* TodayWorkOutTableViewCell.swift */; };
+		668ADB642A5E57BA00AD76AE /* WorkOutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB632A5E57BA00AD76AE /* WorkOutManager.swift */; };
 		668DCD292A4B768C00FF8F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD282A4B768C00FF8F3C /* AppDelegate.swift */; };
 		668DCD2B2A4B768C00FF8F3C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD2A2A4B768C00FF8F3C /* SceneDelegate.swift */; };
 		668DCD2D2A4B768C00FF8F3C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD2C2A4B768C00FF8F3C /* MainTabBarViewController.swift */; };
@@ -28,14 +35,20 @@
 		668DCD612A5352BF00FF8F3C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD602A5352BF00FF8F3C /* Endpoint.swift */; };
 		668DCD632A55121F00FF8F3C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD622A55121F00FF8F3C /* Extensions.swift */; };
 		668DCD652A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD642A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift */; };
-		668DCD672A553A2E00FF8F3C /* TodayWorkOutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD662A553A2E00FF8F3C /* TodayWorkOutTableViewCell.swift */; };
-		668DCD692A55414400FF8F3C /* CardTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD682A55414400FF8F3C /* CardTableViewManager.swift */; };
-		668DCD6B2A56071E00FF8F3C /* WorkOutScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD6A2A56071E00FF8F3C /* WorkOutScheduleTableViewCell.swift */; };
-		668DCD6D2A560D1F00FF8F3C /* WorkOutTableViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD6C2A560D1F00FF8F3C /* WorkOutTableViewManager.swift */; };
+		668DCD672A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD662A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift */; };
+		668DCD692A55414400FF8F3C /* CardCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD682A55414400FF8F3C /* CardCollectionViewManager.swift */; };
+		668DCD6D2A560D1F00FF8F3C /* WorkOutCollectionViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD6C2A560D1F00FF8F3C /* WorkOutCollectionViewManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		668ADB522A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecipesCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
+		668ADB542A5CABF700AD76AE /* DetailRecipeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewController.swift; sourceTree = "<group>"; };
+		668ADB572A5CADF100AD76AE /* RecipeDetaiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetaiView.swift; sourceTree = "<group>"; };
+		668ADB592A5CAE3900AD76AE /* RecipeDetailViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewViewModel.swift; sourceTree = "<group>"; };
+		668ADB5D2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerCollectionViewCell.swift; sourceTree = "<group>"; };
+		668ADB5F2A5E208200AD76AE /* GroceryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryCollectionViewCell.swift; sourceTree = "<group>"; };
+		668ADB612A5E570900AD76AE /* TodayWorkOutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkOutTableViewCell.swift; sourceTree = "<group>"; };
+		668ADB632A5E57BA00AD76AE /* WorkOutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutManager.swift; sourceTree = "<group>"; };
 		668DCD252A4B768C00FF8F3C /* MealPlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealPlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		668DCD282A4B768C00FF8F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		668DCD2A2A4B768C00FF8F3C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,10 +71,9 @@
 		668DCD602A5352BF00FF8F3C /* Endpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
 		668DCD622A55121F00FF8F3C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		668DCD642A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRecipesByIngredientsViewModel.swift; sourceTree = "<group>"; };
-		668DCD662A553A2E00FF8F3C /* TodayWorkOutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkOutTableViewCell.swift; sourceTree = "<group>"; };
-		668DCD682A55414400FF8F3C /* CardTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardTableViewManager.swift; sourceTree = "<group>"; };
-		668DCD6A2A56071E00FF8F3C /* WorkOutScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutScheduleTableViewCell.swift; sourceTree = "<group>"; };
-		668DCD6C2A560D1F00FF8F3C /* WorkOutTableViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutTableViewManager.swift; sourceTree = "<group>"; };
+		668DCD662A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWorkOutCollectionViewCell.swift; sourceTree = "<group>"; };
+		668DCD682A55414400FF8F3C /* CardCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewManager.swift; sourceTree = "<group>"; };
+		668DCD6C2A560D1F00FF8F3C /* WorkOutCollectionViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutCollectionViewManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +87,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		668ADB562A5CABFF00AD76AE /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				668ADB542A5CABF700AD76AE /* DetailRecipeViewController.swift */,
+			);
+			path = Other;
+			sourceTree = "<group>";
+		};
+		668ADB5B2A5E100800AD76AE /* SearchViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				668ADB592A5CAE3900AD76AE /* RecipeDetailViewViewModel.swift */,
+				668DCD642A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift */,
+				668ADB522A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift */,
+			);
+			path = SearchViewModels;
+			sourceTree = "<group>";
+		};
+		668ADB5C2A5E1D9300AD76AE /* HomeViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				668DCD682A55414400FF8F3C /* CardCollectionViewManager.swift */,
+				668DCD6C2A560D1F00FF8F3C /* WorkOutCollectionViewManager.swift */,
+				668ADB632A5E57BA00AD76AE /* WorkOutManager.swift */,
+			);
+			path = HomeViewModels;
+			sourceTree = "<group>";
+		};
 		668DCD1C2A4B768C00FF8F3C = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				668DCD402A4CC89A00FF8F3C /* Core */,
+				668ADB562A5CABFF00AD76AE /* Other */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -141,6 +182,7 @@
 			children = (
 				668DCD4D2A4E017600FF8F3C /* SearchResultView.swift */,
 				668DCD4F2A4E073F00FF8F3C /* SearchResultCollectionViewCell.swift */,
+				668ADB572A5CADF100AD76AE /* RecipeDetaiView.swift */,
 			);
 			path = "Search Screen";
 			sourceTree = "<group>";
@@ -149,8 +191,10 @@
 			isa = PBXGroup;
 			children = (
 				668DCD4B2A4E016A00FF8F3C /* TodayView.swift */,
-				668DCD662A553A2E00FF8F3C /* TodayWorkOutTableViewCell.swift */,
-				668DCD6A2A56071E00FF8F3C /* WorkOutScheduleTableViewCell.swift */,
+				668DCD662A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift */,
+				668ADB5D2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift */,
+				668ADB612A5E570900AD76AE /* TodayWorkOutTableViewCell.swift */,
+				668ADB5F2A5E208200AD76AE /* GroceryCollectionViewCell.swift */,
 			);
 			path = "Home Screen";
 			sourceTree = "<group>";
@@ -167,10 +211,8 @@
 		668DCD542A513A5300FF8F3C /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				668DCD642A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift */,
-				668ADB522A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift */,
-				668DCD6C2A560D1F00FF8F3C /* WorkOutTableViewManager.swift */,
-				668DCD682A55414400FF8F3C /* CardTableViewManager.swift */,
+				668ADB5B2A5E100800AD76AE /* SearchViewModels */,
+				668ADB5C2A5E1D9300AD76AE /* HomeViewModels */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -278,24 +320,30 @@
 				668ADB532A58A90100AD76AE /* SearchRecipesCollectionViewCellViewModel.swift in Sources */,
 				668DCD5F2A5352B000FF8F3C /* Request.swift in Sources */,
 				668DCD592A526FFF00FF8F3C /* RecipesByIngredients.swift in Sources */,
-				668DCD6D2A560D1F00FF8F3C /* WorkOutTableViewManager.swift in Sources */,
+				668DCD6D2A560D1F00FF8F3C /* WorkOutCollectionViewManager.swift in Sources */,
+				668ADB642A5E57BA00AD76AE /* WorkOutManager.swift in Sources */,
 				668DCD5D2A5352A300FF8F3C /* Service.swift in Sources */,
+				668ADB5E2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift in Sources */,
 				668DCD3F2A4CC6F500FF8F3C /* SearchViewController.swift in Sources */,
+				668ADB602A5E208200AD76AE /* GroceryCollectionViewCell.swift in Sources */,
 				668DCD612A5352BF00FF8F3C /* Endpoint.swift in Sources */,
 				668DCD502A4E073F00FF8F3C /* SearchResultCollectionViewCell.swift in Sources */,
 				668DCD452A4CCDAD00FF8F3C /* HealthTrackViewController.swift in Sources */,
 				668DCD4C2A4E016A00FF8F3C /* TodayView.swift in Sources */,
-				668DCD692A55414400FF8F3C /* CardTableViewManager.swift in Sources */,
+				668DCD692A55414400FF8F3C /* CardCollectionViewManager.swift in Sources */,
+				668ADB5A2A5CAE3900AD76AE /* RecipeDetailViewViewModel.swift in Sources */,
 				668DCD5B2A52732600FF8F3C /* RecipeInstructions.swift in Sources */,
-				668DCD6B2A56071E00FF8F3C /* WorkOutScheduleTableViewCell.swift in Sources */,
 				668DCD432A4CCD9500FF8F3C /* PlannerViewController.swift in Sources */,
+				668ADB582A5CADF100AD76AE /* RecipeDetaiView.swift in Sources */,
 				668DCD292A4B768C00FF8F3C /* AppDelegate.swift in Sources */,
 				668DCD2B2A4B768C00FF8F3C /* SceneDelegate.swift in Sources */,
 				668DCD472A4CCDBA00FF8F3C /* ProfileViewController.swift in Sources */,
+				668ADB552A5CABF700AD76AE /* DetailRecipeViewController.swift in Sources */,
+				668ADB622A5E570900AD76AE /* TodayWorkOutTableViewCell.swift in Sources */,
 				668DCD632A55121F00FF8F3C /* Extensions.swift in Sources */,
 				668DCD3D2A4CC6DF00FF8F3C /* TodayViewController.swift in Sources */,
 				668DCD652A55142100FF8F3C /* SearchRecipesByIngredientsViewModel.swift in Sources */,
-				668DCD672A553A2E00FF8F3C /* TodayWorkOutTableViewCell.swift in Sources */,
+				668DCD672A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift in Sources */,
 				668DCD4E2A4E017600FF8F3C /* SearchResultView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
