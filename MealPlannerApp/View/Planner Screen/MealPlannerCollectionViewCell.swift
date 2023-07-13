@@ -10,32 +10,17 @@ import UIKit
 class MealPlannerCollectionViewCell: UICollectionViewCell {
     static let identifier = "MealPlannerCollectionViewCell"
     
-    private let workOutManager = WorkOutManager()
-    
     private var containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    private var workOutScheduleTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(TodayWorkOutTableViewCell.self, forCellReuseIdentifier: TodayWorkOutTableViewCell.identifier)
-//        tableView.backgroundColor = .green
-        tableView.layoutMargins = UIEdgeInsets.zero
-        tableView.separatorInset = UIEdgeInsets.zero
-        tableView.rowHeight = 36
-        tableView.isScrollEnabled = false
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-
-    private var workOutInfo: UILabel = {
+    private var mealPlannerLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 26, weight: .bold)
-        label.text = "Evening Workout"
+        label.text = "Meal Planner"
         label.textColor = .black
         return label
     }()
@@ -49,27 +34,34 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var buttonStartWorkOut: UIButton = {
+    private var mealsCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.register(MealsCollectionViewCell.self, forCellWithReuseIdentifier: MealsCollectionViewCell.identifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    private var buttonAddNewMeal: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Start Workout", for: .normal)
+        button.setTitle("Add new Food", for: .normal)
         button.layer.cornerRadius = 8
-        button.backgroundColor = .blue
+        button.backgroundColor = UIColor(red: 0.00, green: 0.85, blue: 0.83, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
-      
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        contentView.backgroundColor = .secondarySystemBackground
         contentView.backgroundColor = .white
         contentView.addSubview(containerView)
-        containerView.addSubViews(workOutInfo, workOutScheduleTableView,dateLabel,buttonStartWorkOut)
+        containerView.addSubViews(mealPlannerLabel,dateLabel,mealsCollectionView, buttonAddNewMeal)
         styleForCell()
         initConstraints()
-        setUpWorkOutScheduleCollectionView()
+
     }
     
     private func styleForCell(){
@@ -90,31 +82,26 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
-            workOutInfo.topAnchor.constraint(equalTo: containerView.topAnchor),
-            workOutInfo.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            workOutInfo.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            mealPlannerLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
+            mealPlannerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            mealPlannerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             
-            dateLabel.topAnchor.constraint(equalTo: workOutInfo.bottomAnchor, constant: 10),
+            dateLabel.topAnchor.constraint(equalTo: mealPlannerLabel.bottomAnchor, constant: 10),
             dateLabel.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
             dateLabel.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
             
-            workOutScheduleTableView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor),
-            workOutScheduleTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            workOutScheduleTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-           
+            mealsCollectionView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
+            mealsCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            mealsCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             
-            buttonStartWorkOut.topAnchor.constraint(equalTo: workOutScheduleTableView.bottomAnchor),
-            buttonStartWorkOut.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
-            buttonStartWorkOut.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            buttonStartWorkOut.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonAddNewMeal.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
+            buttonAddNewMeal.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            buttonAddNewMeal.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
             
         ])
     }
     
-    private func setUpWorkOutScheduleCollectionView(){
-        workOutScheduleTableView.dataSource = workOutManager
-        workOutScheduleTableView.delegate = workOutManager
-    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

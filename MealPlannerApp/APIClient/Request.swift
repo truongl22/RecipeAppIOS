@@ -29,19 +29,27 @@ final class Request{
     /// Create url in String format
     private var urlString: String{
         var url = baseURL.baseurl
-        url += endpoint.rawValue
-        
-        if !queryParameters.isEmpty{
-            url += "?"
-            for param in queryParameters{
-                guard let value = param.value else {return ""}
-                url += param.name + "=" + value
-                if param != queryParameters.last{
-                    url += "&"
+        if endpoint.rawValue == "analyzedInstructions"{
+            url += "\(queryParameters[0].value!)/analyzedInstructions"
+            return url
+        }
+        else{
+            url += endpoint.rawValue
+            
+            if !queryParameters.isEmpty{
+                url += "?"
+                for param in queryParameters{
+                    guard let value = param.value else {return ""}
+                    url += param.name + "=" + value
+                    if param != queryParameters.last{
+                        url += "&"
+                    }
                 }
             }
+            return url
         }
-        return url
+        
+        
     }
     
     /// return an url

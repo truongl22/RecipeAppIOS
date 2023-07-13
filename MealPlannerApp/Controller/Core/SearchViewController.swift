@@ -13,6 +13,7 @@ class SearchViewController: UIViewController, SearchResultViewDelegate {
     func sendRecipeDetailToController(view: SearchResultView, selectedRecipe recipe: RecipesByIngredients) {
         let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
         let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
+        detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(detailRecipeViewController, animated: true)
     }
     
@@ -28,7 +29,12 @@ class SearchViewController: UIViewController, SearchResultViewDelegate {
     }
     
     private func setUpView(){
-        searchResultView.pin(to: view)
+        NSLayoutConstraint.activate([
+            searchResultView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchResultView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            searchResultView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            searchResultView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
         searchResultView.delegate = self
     }
     

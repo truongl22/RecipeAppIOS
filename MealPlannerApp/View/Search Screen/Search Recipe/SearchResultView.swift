@@ -44,18 +44,12 @@ final class SearchResultView: UIView {
         setUprecipeInCollectionView()
         initConstraints()
         searchRecipesByIngrdeintsViewModel.delegate = self
-//        searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
+        searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
    
     }
     
     private func initConstraints(){
         recipeInCollectionView.pin(to: self)
-//        NSLayoutConstraint.activate([
-//            recipeInCollectionView.topAnchor.constraint(equalTo: topAnchor),
-//            recipeInCollectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            recipeInCollectionView.leftAnchor.constraint(equalTo: leftAnchor),
-//            recipeInCollectionView.rightAnchor.constraint(equalTo: rightAnchor)
-//        ])
     }
     
     private func setUprecipeInCollectionView(){

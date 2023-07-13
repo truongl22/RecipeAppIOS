@@ -23,8 +23,14 @@ final class WorkOutManager: NSObject, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView:UIView =  UIView()
+        let headerView:UIView =  InstructionHeaderView()
         headerView.backgroundColor = .blue
+//        NSLayoutConstraint.activate([
+//            headerView.heightAnchor.constraint(equalToConstant: 100)
+//
+//
+//        ])
+//        
         return headerView
     }
     

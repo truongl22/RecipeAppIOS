@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TodayView: UIView {
+class PlannerView: UIView {
     private let cardCollectionViewManager = CardCollectionViewManager()
 
     private var cardsCollectionView: UICollectionView = {

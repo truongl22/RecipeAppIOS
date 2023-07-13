@@ -10,8 +10,6 @@ import UIKit
 class TodayWorkOutTableViewCell: UITableViewCell {
     static let identifier = "TodayWorkOutTableViewCell"
     
-    
-    
     private var exerciseLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

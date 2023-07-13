@@ -11,4 +11,5 @@ import Foundation
 @frozen enum Endpoint: String {
     /// Endpoint to find Ingredients
     case findByIngredients
+    case analyzedInstructions
 }
