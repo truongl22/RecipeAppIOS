@@ -23,15 +23,13 @@ final class WorkOutManager: NSObject, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView:UIView =  InstructionHeaderView()
-        headerView.backgroundColor = .blue
-//        NSLayoutConstraint.activate([
-//            headerView.heightAnchor.constraint(equalToConstant: 100)
-//
-//
-//        ])
-//        
-        return headerView
+//        let headerView:UIView =  WorkoutHeaderView()
+//        return headerView
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
+                                                                "sectionHeader") as! WorkoutHeaderView
+        
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -8,42 +8,83 @@
 import UIKit
 
 class InstructionHeaderView: UIView {
-
-    private let recipeImageResult: UIImageView = {
+    static let identifier = "InstructionHeaderView"
+    
+    private let recipeImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .green
         image.contentMode = .scaleAspectFill
-        image.clipsToBounds = true
+        //        image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
-    private var exerciseLabel: UILabel = {
+    private var recipeNameLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.text = "mvkemvkemkive"
         return label
+    }()
+    
+    private var tabs: [UIButton] = ["Ingredients", "Instructions"]
+        .map { buttonTitle in
+            let button = UIButton(type: .system)
+            button.setTitle(buttonTitle, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 16, weight: .bold)
+            button.tintColor = .label
+            button.translatesAutoresizingMaskIntoConstraints = false
+            return button
+        }
+    
+    private lazy var sectionStack: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: tabs)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .equalSpacing
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        return stackView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .yellow
-        addSubview(exerciseLabel)
+        backgroundColor = .white
+        addSubViews(recipeImage,recipeNameLabel,sectionStack)
         initConstraints()
     }
-
+    
+    
     private func initConstraints(){
-//        recipeImageResult.pin(to: self)
         NSLayoutConstraint.activate([
-            exerciseLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
-            exerciseLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 2),
- 
-           
+            recipeImage.topAnchor.constraint(equalTo: self.topAnchor),
+            recipeImage.leftAnchor.constraint(equalTo: self.leftAnchor),
+            recipeImage.rightAnchor.constraint(equalTo: self.rightAnchor),
+            
+            recipeNameLabel.topAnchor.constraint(equalTo: recipeImage.bottomAnchor, constant: 10),
+            recipeNameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            recipeNameLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
+            
+            sectionStack.topAnchor.constraint(equalTo: recipeNameLabel.bottomAnchor, constant: 10),
+            sectionStack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 40),
+            sectionStack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -40),
+            sectionStack.heightAnchor.constraint(equalToConstant: 34),
+            sectionStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
         ])
-        
+    }
+    
+    public func configure(with viewModel: RecipeDetailViewViewModel){
+        recipeNameLabel.text = viewModel.title
+        viewModel.fetchRecipeImage{ [weak self]result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    self?.recipeImage.image = image
+                }
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
     }
     
     

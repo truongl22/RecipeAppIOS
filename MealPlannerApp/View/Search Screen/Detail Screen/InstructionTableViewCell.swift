@@ -10,7 +10,7 @@ import UIKit
 class InstructionTableViewCell: UITableViewCell {
     static let identifier = "InstructionTableViewCell"
     
-    private var exerciseLabel: UILabel = {
+    private var instructionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -19,30 +19,18 @@ class InstructionTableViewCell: UITableViewCell {
         return label
     }()
     
-    private var bestSetLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.text = "45 lb x 4"
-        label.textColor = .black
-        return label
-    }()
-    
     private func initConstraints(){
         
         NSLayoutConstraint.activate([
-            exerciseLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            exerciseLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 2),
-            bestSetLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            bestSetLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -2),
-           
+            instructionLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            instructionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 2),
         ])
         
     }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubViews(exerciseLabel, bestSetLabel)
+        addSubViews(instructionLabel)
         initConstraints()
     }
     
@@ -52,13 +40,26 @@ class InstructionTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
+    
+//    public func configure(with viewModel: RecipeDetailViewViewModel){
+//        viewModel.fetchRecipeImage{ [weak self]result in
+//            switch result {
+//            case .success(let data):
+//                DispatchQueue.main.async {
+//                    let image = UIImage(data: data)
+//                    print(image)
+//                    self?.recipeImageResult.image = image
+//                }
+//            case .failure(let error):
+//                print(String(describing: error))
+//            }
+//
+//        }
+//    }
 
 }

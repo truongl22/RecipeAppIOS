@@ -13,6 +13,7 @@ class PlannerView: UIView {
     private var cardsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .secondarySystemBackground
         collectionView.register(TodayWorkOutCollectionViewCell.self, forCellWithReuseIdentifier: TodayWorkOutCollectionViewCell.identifier)
         collectionView.register(MealPlannerCollectionViewCell.self, forCellWithReuseIdentifier: MealPlannerCollectionViewCell.identifier)
         collectionView.register(GroceryCollectionViewCell.self, forCellWithReuseIdentifier: GroceryCollectionViewCell.identifier)

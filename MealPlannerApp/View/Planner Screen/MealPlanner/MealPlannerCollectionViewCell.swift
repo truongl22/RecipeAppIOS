@@ -47,7 +47,7 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
         let button = UIButton(type: .system)
         button.setTitle("Add new Food", for: .normal)
         button.layer.cornerRadius = 8
-        button.backgroundColor = UIColor(red: 0.00, green: 0.85, blue: 0.83, alpha: 1.00)
+        button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -56,8 +56,8 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .white
         contentView.addSubview(containerView)
+        contentView.backgroundColor = .white
         containerView.addSubViews(mealPlannerLabel,dateLabel,mealsCollectionView, buttonAddNewMeal)
         styleForCell()
         initConstraints()

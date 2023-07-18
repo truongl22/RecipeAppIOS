@@ -26,11 +26,13 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
             }
         }
     }
+    
+    
     private var recipeCellViewModel: [SearchRecipesCollectionViewCellViewModel] = []
     
     public func fetchRecipesByIngredients(){
-        let query1 = URLQueryItem(name: "ingredients", value: "egg")
-        let query2 = URLQueryItem(name: "number", value: "50")
+        let query1 = URLQueryItem(name: "ingredients", value: "rice")
+        let query2 = URLQueryItem(name: "number", value: "20")
         let request = Request(endpoint: Endpoint.findByIngredients, queryParameters: [query1,query2])
         
         Service.shared.execute(request, expecting: RecipesByIngredients.self){ [weak self] result in
@@ -44,7 +46,6 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
             case .failure(let error):
                 print(String(describing: error))
             }
-            
         }
     }
     

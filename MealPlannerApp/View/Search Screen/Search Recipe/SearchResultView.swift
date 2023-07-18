@@ -45,7 +45,6 @@ final class SearchResultView: UIView {
         initConstraints()
         searchRecipesByIngrdeintsViewModel.delegate = self
         searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
-   
     }
     
     private func initConstraints(){

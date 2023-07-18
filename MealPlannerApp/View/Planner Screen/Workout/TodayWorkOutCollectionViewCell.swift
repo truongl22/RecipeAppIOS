@@ -21,6 +21,7 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
     private var workOutScheduleTableView: UITableView = {
         let tableView = UITableView()
         tableView.register(TodayWorkOutTableViewCell.self, forCellReuseIdentifier: TodayWorkOutTableViewCell.identifier)
+        tableView.register(WorkoutHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
 //        tableView.backgroundColor = .green
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
@@ -36,7 +37,7 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 26, weight: .bold)
         label.text = "Evening Workout"
-        label.textColor = .black
+        label.textColor = UIColor(red: 0.00, green: 0.12, blue: 0.17, alpha: 1.00)
         return label
     }()
     
@@ -54,9 +55,9 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
         button.setTitle("Start Workout", for: .normal)
         button.layer.cornerRadius = 8
 //        button.backgroundColor = UIColor(red: 0.00, green: 0.42, blue: 1.00, alpha: 1.00)
-        button.backgroundColor = UIColor(red: 0.98, green: 0.62, blue: 0.62, alpha: 1.00)
+        button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
       
         button.translatesAutoresizingMaskIntoConstraints = false
         return button

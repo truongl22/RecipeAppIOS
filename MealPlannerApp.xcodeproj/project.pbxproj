@@ -21,6 +21,8 @@
 		668ADB6C2A5F308D00AD76AE /* GroceryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB6B2A5F308D00AD76AE /* GroceryListViewController.swift */; };
 		668ADB6E2A5FACEE00AD76AE /* InstructionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB6D2A5FACEE00AD76AE /* InstructionTableViewCell.swift */; };
 		668ADB722A5FB8EA00AD76AE /* InstructionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB712A5FB8EA00AD76AE /* InstructionHeaderView.swift */; };
+		668ADB742A60854D00AD76AE /* WorkoutHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB732A60854D00AD76AE /* WorkoutHeaderView.swift */; };
+		668ADB792A60AA0C00AD76AE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668ADB782A60AA0C00AD76AE /* ProfileView.swift */; };
 		668DCD292A4B768C00FF8F3C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD282A4B768C00FF8F3C /* AppDelegate.swift */; };
 		668DCD2B2A4B768C00FF8F3C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD2A2A4B768C00FF8F3C /* SceneDelegate.swift */; };
 		668DCD2D2A4B768C00FF8F3C /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668DCD2C2A4B768C00FF8F3C /* MainTabBarViewController.swift */; };
@@ -59,6 +61,8 @@
 		668ADB6B2A5F308D00AD76AE /* GroceryListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryListViewController.swift; sourceTree = "<group>"; };
 		668ADB6D2A5FACEE00AD76AE /* InstructionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionTableViewCell.swift; sourceTree = "<group>"; };
 		668ADB712A5FB8EA00AD76AE /* InstructionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionHeaderView.swift; sourceTree = "<group>"; };
+		668ADB732A60854D00AD76AE /* WorkoutHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHeaderView.swift; sourceTree = "<group>"; };
+		668ADB782A60AA0C00AD76AE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		668DCD252A4B768C00FF8F3C /* MealPlannerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealPlannerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		668DCD282A4B768C00FF8F3C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		668DCD2A2A4B768C00FF8F3C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +148,41 @@
 			path = "Search Recipe";
 			sourceTree = "<group>";
 		};
+		668ADB752A6090CF00AD76AE /* Workout */ = {
+			isa = PBXGroup;
+			children = (
+				668DCD662A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift */,
+				668ADB612A5E570900AD76AE /* TodayWorkOutTableViewCell.swift */,
+				668ADB732A60854D00AD76AE /* WorkoutHeaderView.swift */,
+			);
+			path = Workout;
+			sourceTree = "<group>";
+		};
+		668ADB762A6090DE00AD76AE /* MealPlanner */ = {
+			isa = PBXGroup;
+			children = (
+				668ADB5D2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift */,
+				668ADB652A5F287C00AD76AE /* MealsCollectionViewCell.swift */,
+			);
+			path = MealPlanner;
+			sourceTree = "<group>";
+		};
+		668ADB772A6090E600AD76AE /* Groceries */ = {
+			isa = PBXGroup;
+			children = (
+				668ADB5F2A5E208200AD76AE /* GroceryCollectionViewCell.swift */,
+			);
+			path = Groceries;
+			sourceTree = "<group>";
+		};
+		668ADB7A2A60AA1300AD76AE /* Profile Screen */ = {
+			isa = PBXGroup;
+			children = (
+				668ADB782A60AA0C00AD76AE /* ProfileView.swift */,
+			);
+			path = "Profile Screen";
+			sourceTree = "<group>";
+		};
 		668DCD1C2A4B768C00FF8F3C = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +240,7 @@
 			children = (
 				668DCD522A4E076B00FF8F3C /* Planner Screen */,
 				668DCD512A4E074900FF8F3C /* Search Screen */,
+				668ADB7A2A60AA1300AD76AE /* Profile Screen */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -218,11 +258,9 @@
 			isa = PBXGroup;
 			children = (
 				668DCD4B2A4E016A00FF8F3C /* PlannerView.swift */,
-				668DCD662A553A2E00FF8F3C /* TodayWorkOutCollectionViewCell.swift */,
-				668ADB612A5E570900AD76AE /* TodayWorkOutTableViewCell.swift */,
-				668ADB5D2A5E1E1600AD76AE /* MealPlannerCollectionViewCell.swift */,
-				668ADB652A5F287C00AD76AE /* MealsCollectionViewCell.swift */,
-				668ADB5F2A5E208200AD76AE /* GroceryCollectionViewCell.swift */,
+				668ADB752A6090CF00AD76AE /* Workout */,
+				668ADB762A6090DE00AD76AE /* MealPlanner */,
+				668ADB772A6090E600AD76AE /* Groceries */,
 			);
 			path = "Planner Screen";
 			sourceTree = "<group>";
@@ -356,6 +394,8 @@
 				668DCD3F2A4CC6F500FF8F3C /* SearchViewController.swift in Sources */,
 				668ADB602A5E208200AD76AE /* GroceryCollectionViewCell.swift in Sources */,
 				668ADB722A5FB8EA00AD76AE /* InstructionHeaderView.swift in Sources */,
+				668ADB792A60AA0C00AD76AE /* ProfileView.swift in Sources */,
+				668ADB742A60854D00AD76AE /* WorkoutHeaderView.swift in Sources */,
 				668DCD612A5352BF00FF8F3C /* Endpoint.swift in Sources */,
 				668DCD502A4E073F00FF8F3C /* SearchResultCollectionViewCell.swift in Sources */,
 				668DCD452A4CCDAD00FF8F3C /* HealthTrackViewController.swift in Sources */,

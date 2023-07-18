@@ -9,15 +9,6 @@ import UIKit
 
 class SearchViewController: UIViewController, SearchResultViewDelegate {
     
-    ///  send recipe to detail screen
-    func sendRecipeDetailToController(view: SearchResultView, selectedRecipe recipe: RecipesByIngredients) {
-        let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
-        let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
-        detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
-        navigationController?.pushViewController(detailRecipeViewController, animated: true)
-    }
-    
-    
     private let searchResultView = SearchResultView()
     
     override func viewDidLoad() {
@@ -37,6 +28,15 @@ class SearchViewController: UIViewController, SearchResultViewDelegate {
         ])
         searchResultView.delegate = self
     }
+    
+    ///  send recipe to detail screen
+    func sendRecipeDetailToController(view: SearchResultView, selectedRecipe recipe: RecipesByIngredients) {
+        let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
+        let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
+        detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
+        navigationController?.pushViewController(detailRecipeViewController, animated: true)
+    }
+    
     
     
 }
