@@ -11,7 +11,7 @@ import UIKit
 class RecipeDetaiView: UIView {
     
     var recipeInstructionTableView: UITableView?
-    private var recipeDetailViewViewModel: RecipeDetailViewViewModel
+
     
     
     private func createrecipeInstructionTableView() -> UITableView{
@@ -19,22 +19,20 @@ class RecipeDetaiView: UIView {
 //        tableView.register(InstructionHeaderView.self, forHeaderFooterViewReuseIdentifier: InstructionHeaderView.identifier)
         tableView.register(InstructionTableViewCell.self, forCellReuseIdentifier: InstructionTableViewCell.identifier)
         //        tableView.layoutMargins = UIEdgeInsets.zero
-        //        tableView.separatorInset = UIEdgeInsets.zero
-        
-        tableView.rowHeight = 50
+        //        tableView.separatorInset = UIEdgeInsets.zero      
+        tableView.rowHeight = 150
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }
     
-    init(frame: CGRect, recipeDetailViewViewModel: RecipeDetailViewViewModel) {
-        self.recipeDetailViewViewModel = recipeDetailViewViewModel
+    override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .secondarySystemBackground
         let recipeInstructionTableView = createrecipeInstructionTableView()
         self.recipeInstructionTableView = recipeInstructionTableView
         self.addSubViews(recipeInstructionTableView)
-        recipeDetailViewViewModel.fetchRecipesInstructions()
+//        recipeDetailViewViewModel.fetchRecipesInstructions()
         initConstraints()
     
         
@@ -57,14 +55,10 @@ class RecipeDetaiView: UIView {
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
-    
-    
-    
-    
 }
 
-extension RecipeDetaiView:  RecipeDetailViewViewModelProtocol{
-    func didLoad() {
-        recipeInstructionTableView!.reloadData()
-    }
-}
+//extension RecipeDetaiView:  RecipeDetailViewViewModelProtocol{
+//    func didLoad() {
+//        recipeInstructionTableView!.reloadData()
+//    }
+//}

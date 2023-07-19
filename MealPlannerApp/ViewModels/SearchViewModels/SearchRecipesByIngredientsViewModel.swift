@@ -17,7 +17,6 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
 
     public weak var delegate: SearchRecipesByIngredientsViewModelProtocol?
     
-    
     private var recipe: [RecipesByIngredients] = []{
         didSet{
             for i in recipe{
@@ -26,7 +25,6 @@ final class SearchRecipesByIngredientsViewModel: NSObject, UICollectionViewDataS
             }
         }
     }
-    
     
     private var recipeCellViewModel: [SearchRecipesCollectionViewCellViewModel] = []
     

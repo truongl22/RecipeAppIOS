@@ -19,16 +19,14 @@ final class WorkOutManager: NSObject, UITableViewDelegate, UITableViewDataSource
         }
         cell.layoutMargins = UIEdgeInsets.zero
         return cell
-        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
 //        let headerView:UIView =  WorkoutHeaderView()
 //        return headerView
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier:
-                                                                "sectionHeader") as! WorkoutHeaderView
-        
-        
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! WorkoutHeaderView
+        tableView.sectionHeaderHeight = 26
+ 
         return view
     }
     

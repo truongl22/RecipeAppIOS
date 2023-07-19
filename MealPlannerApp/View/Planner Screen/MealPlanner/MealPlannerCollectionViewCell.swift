@@ -46,7 +46,7 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
     private var buttonAddNewMeal: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Add new Food", for: .normal)
-        button.layer.cornerRadius = 8
+        button.layer.cornerRadius = 6
         button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
@@ -65,14 +65,14 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
     }
     
     private func styleForCell(){
-        contentView.layer.cornerRadius = 8
-        contentView.layer.masksToBounds = true
-        contentView.layer.shadowColor = UIColor.gray.cgColor
-        contentView.layer.shadowOffset = .zero
-        contentView.layer.shadowRadius = 4.0
-        contentView.layer.shadowOpacity = 0.4
-        contentView.layer.borderWidth = 1.2
-        contentView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        contentView.layer.cornerRadius = 12
+//        contentView.layer.masksToBounds = true
+//        contentView.layer.shadowColor = UIColor.gray.cgColor
+//        contentView.layer.shadowOffset = .zero
+//        contentView.layer.shadowRadius = 4.0
+//        contentView.layer.shadowOpacity = 0.4
+//        contentView.layer.borderWidth = 1.2
+//        contentView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
     }
     
     private func initConstraints(){

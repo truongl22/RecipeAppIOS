@@ -10,6 +10,7 @@ import UIKit
 class TodayWorkOutCollectionViewCell: UICollectionViewCell{
     static let identifier = "TodayWorkOutCollectionViewCell"
     
+//    private let workOutManager = WorkOutManager()
     private let workOutManager = WorkOutManager()
     
     private var containerView: UIView = {
@@ -53,12 +54,10 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
     private var buttonStartWorkOut: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Start Workout", for: .normal)
-        button.layer.cornerRadius = 8
-//        button.backgroundColor = UIColor(red: 0.00, green: 0.42, blue: 1.00, alpha: 1.00)
+        button.layer.cornerRadius = 6
         button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
-      
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -75,14 +74,14 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
     }
     
     private func styleForCell(){
-        contentView.layer.cornerRadius = 8
-        contentView.layer.masksToBounds = true
-        contentView.layer.shadowColor = UIColor.gray.cgColor
-        contentView.layer.shadowOffset = .zero
-        contentView.layer.shadowRadius = 4.0
-        contentView.layer.shadowOpacity = 0.4
-        contentView.layer.borderWidth = 1.2
-        contentView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        contentView.layer.cornerRadius = 12
+//        contentView.layer.masksToBounds = true
+//        contentView.layer.shadowColor = UIColor.gray.cgColor
+//        contentView.layer.shadowOffset = .zero
+//        contentView.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+//        contentView.layer.shadowRadius = 4.0
+//        contentView.layer.shadowOpacity = 0.4
+//        contentView.layer.borderWidth = 1.2
     }
     
     private func initConstraints(){
@@ -92,13 +91,13 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
-            workOutInfo.topAnchor.constraint(equalTo: containerView.topAnchor),
-            workOutInfo.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            workOutInfo.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            workOutInfo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 2),
+            workOutInfo.leadingAnchor.constraint(equalTo: containerView.leadingAnchor,constant: 2),
+            workOutInfo.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -2),
             
             dateLabel.topAnchor.constraint(equalTo: workOutInfo.bottomAnchor, constant: 10),
-            dateLabel.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: workOutInfo.leadingAnchor),
+            dateLabel.trailingAnchor.constraint(equalTo: workOutInfo.trailingAnchor),
             
             workOutScheduleTableView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor),
             workOutScheduleTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -107,7 +106,7 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
             buttonStartWorkOut.topAnchor.constraint(equalTo: workOutScheduleTableView.bottomAnchor),
             buttonStartWorkOut.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             buttonStartWorkOut.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            buttonStartWorkOut.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonStartWorkOut.bottomAnchor.constraint(equalTo: containerView.bottomAnchor,constant: -4),
             
         ])
     }

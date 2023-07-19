@@ -7,10 +7,50 @@
 
 import UIKit
 
-class PlannerView: UIView {
-    private let cardCollectionViewManager = CardCollectionViewManager()
+//class PlannerView: UIView {
+//    private let cardCollectionViewManager = CardCollectionViewManager()
+//
+//    private var cardsCollectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collectionView.backgroundColor = .secondarySystemBackground
+//        collectionView.register(TodayWorkOutCollectionViewCell.self, forCellWithReuseIdentifier: TodayWorkOutCollectionViewCell.identifier)
+//        collectionView.register(MealPlannerCollectionViewCell.self, forCellWithReuseIdentifier: MealPlannerCollectionViewCell.identifier)
+//        collectionView.register(GroceryCollectionViewCell.self, forCellWithReuseIdentifier: GroceryCollectionViewCell.identifier)
+//        collectionView.translatesAutoresizingMaskIntoConstraints = false
+//        return collectionView
+//    }()
+//
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        translatesAutoresizingMaskIntoConstraints = false
+//        self.backgroundColor = .secondarySystemBackground
+//        self.addSubViews(cardsCollectionView)
+//        setUpCardCollectionView()
+//        initConstraints()
+//
+//    }
+//
+//    private func initConstraints(){
+//        cardsCollectionView.pin(to: self)
+//    }
+//
+//    private func setUpCardCollectionView(){
+//        cardsCollectionView.dataSource = cardCollectionViewManager
+//        cardsCollectionView.delegate = cardCollectionViewManager
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//
+//}
 
-    private var cardsCollectionView: UICollectionView = {
+class PlannerView: UIView {
+    
+    var cardsCollectionView: UICollectionView?
+    
+    private func createCardsCollectionView() -> UICollectionView{
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .secondarySystemBackground
@@ -19,26 +59,32 @@ class PlannerView: UIView {
         collectionView.register(GroceryCollectionViewCell.self, forCellWithReuseIdentifier: GroceryCollectionViewCell.identifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
-    }()
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        self.backgroundColor = .systemBackground
+        self.backgroundColor = .secondarySystemBackground
+        let cardsCollectionView = createCardsCollectionView()
+        self.cardsCollectionView = cardsCollectionView
         self.addSubViews(cardsCollectionView)
-        setUpCardCollectionView()
 
         initConstraints()
    
     }
     
     private func initConstraints(){
-        cardsCollectionView.pin(to: self)
-    }
-    
-    private func setUpCardCollectionView(){
-        cardsCollectionView.dataSource = cardCollectionViewManager
-        cardsCollectionView.delegate = cardCollectionViewManager
+        guard let cardsCollectionView = cardsCollectionView else{
+            return
+        }
+        NSLayoutConstraint.activate([
+            cardsCollectionView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            cardsCollectionView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor),
+            cardsCollectionView.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor),
+            cardsCollectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+   
+            
+        ])
     }
     
     required init?(coder: NSCoder) {

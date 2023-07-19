@@ -44,7 +44,7 @@ final class SearchResultView: UIView {
         setUprecipeInCollectionView()
         initConstraints()
         searchRecipesByIngrdeintsViewModel.delegate = self
-        searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
+//        searchRecipesByIngrdeintsViewModel.fetchRecipesByIngredients()
     }
     
     private func initConstraints(){

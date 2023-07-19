@@ -10,10 +10,11 @@ import UIKit
 /// a controller that show a detail recipe
 class DetailRecipeViewController: UIViewController {
     private let viewModel: RecipeDetailViewViewModel
-    private let recipeDetailView: RecipeDetaiView
+    private var cellHeights: [IndexPath: CGFloat] = [:]
+    private let recipeDetailView = RecipeDetaiView()
     
     init(viewModel: RecipeDetailViewViewModel){
-        self.recipeDetailView = RecipeDetaiView(frame: .zero, recipeDetailViewViewModel: viewModel)
+       
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -25,23 +26,21 @@ class DetailRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        //        title = viewModel.title
-        //        self.navigationController?.isNavigationBarHidden = true
-        //        viewModel.fetchRecipesInstructions()
         view.addSubview(recipeDetailView)
         recipeDetailView.recipeInstructionTableView?.delegate = self
         recipeDetailView.recipeInstructionTableView?.dataSource = self
         setUpView()
-    
-//        viewModel.onDataUpdated = { [weak self] in
-//            self?.updateUI()
+        viewModel.delegate = self
+        viewModel.fetchRecipesInstructions()
+        
+
+//        viewModel.onDataFetched = { [weak self] in
+//            DispatchQueue.main.async {
+//                self?.recipeDetailView.recipeInstructionTableView?.reloadData()
+//            }
 //        }
-    }
-    
-    private func updateUI() -> [RecipeInstructions]{
-        // Update the UI, now that the data is available
-        return viewModel.instructions
-      
+        
+        
     }
     
     
@@ -56,22 +55,26 @@ class DetailRecipeViewController: UIViewController {
 }
 
 extension DetailRecipeViewController:  UITableViewDelegate, UITableViewDataSource{
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(viewModel.numberOfInstructions())
-        return viewModel.numberOfInstructions()
+        print("ccccc \(viewModel.numberOfIns())")
+        print("dddddd \(viewModel.numberOfInstructions.count)")
+
+        return viewModel.numberOfInstructions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: InstructionTableViewCell.identifier, for: indexPath) as? InstructionTableViewCell else{
             fatalError("Unsupported Cell")
-            
         }
+        let model = viewModel.numberOfInstructions[indexPath.row]
+        cell.configure(with: model)
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         //        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: InstructionHeaderView.identifier) as! InstructionHeaderView
-        
         let headerView = InstructionHeaderView(frame: CGRect(x: 0, y: 0, width: recipeDetailView.bounds.width, height: 450))
         //        recipeInstructionTableView.tableHeaderView = headerView
         //
@@ -83,4 +86,15 @@ extension DetailRecipeViewController:  UITableViewDelegate, UITableViewDataSourc
         return section == 0 ? 450 : 0
     }
     
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//            return 150 // Provide an estimated row height for better performance
+//    }
+    
 }
+
+extension DetailRecipeViewController:  RecipeDetailViewViewModelProtocol{
+    func didLoad() {
+        recipeDetailView.recipeInstructionTableView!.reloadData()
+    }
+}
+

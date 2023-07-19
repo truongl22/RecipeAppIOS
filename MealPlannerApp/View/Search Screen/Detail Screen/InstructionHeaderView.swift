@@ -8,8 +8,6 @@
 import UIKit
 
 class InstructionHeaderView: UIView {
-    static let identifier = "InstructionHeaderView"
-    
     private let recipeImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill

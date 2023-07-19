@@ -14,24 +14,46 @@ class InstructionTableViewCell: UITableViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.text = "3 x Leg Extension"
+        label.numberOfLines = 0
         label.textColor = .black
         return label
     }()
     
-    private func initConstraints(){
-        
-        NSLayoutConstraint.activate([
-            instructionLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            instructionLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 2),
-        ])
-        
-    }
+    private var stepNumberLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        label.textColor = .gray
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubViews(instructionLabel)
+        addSubViews(instructionLabel,stepNumberLabel)
         initConstraints()
+    }
+    
+    private func initConstraints(){
+        
+        NSLayoutConstraint.activate([
+            stepNumberLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 4),
+            stepNumberLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            
+            instructionLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
+            instructionLabel.leftAnchor.constraint(equalTo: stepNumberLabel.rightAnchor, constant: 10),
+            instructionLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -4),
+            instructionLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -4)
+        ])
+//
+//        instructionLabel.setContentCompressionResistancePriority(.required, for: .vertical)
+        
+    }
+    
+    public func configure(with viewModel: StepArray){
+        print(viewModel)
+        instructionLabel.text = viewModel.step
+        stepNumberLabel.text = String(viewModel.number)
+   
     }
     
     required init?(coder: NSCoder) {
@@ -45,21 +67,5 @@ class InstructionTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-//    public func configure(with viewModel: RecipeDetailViewViewModel){
-//        viewModel.fetchRecipeImage{ [weak self]result in
-//            switch result {
-//            case .success(let data):
-//                DispatchQueue.main.async {
-//                    let image = UIImage(data: data)
-//                    print(image)
-//                    self?.recipeImageResult.image = image
-//                }
-//            case .failure(let error):
-//                print(String(describing: error))
-//            }
-//
-//        }
-//    }
 
 }

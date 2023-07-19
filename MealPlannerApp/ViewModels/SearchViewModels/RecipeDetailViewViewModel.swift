@@ -15,21 +15,35 @@ final class RecipeDetailViewViewModel{
     public weak var delegate: RecipeDetailViewViewModelProtocol?
     
     private let detailedRecipe: RecipesByIngredients
-    public var instructions: [RecipeInstructions] = []
     
-    public var onDataUpdated: (() -> Void)?
-    
-    
-    init(detailedRecipe: RecipesByIngredients){
-        self.detailedRecipe = detailedRecipe
+    private var instructions: [RecipeInstructions] = []{
+        didSet {
+            var newInstructions: [StepArray] = []
+            for i in instructions {
+                let arrayStep = i.steps
+                for j in arrayStep {
+                    let model = StepArray(number: j.number, step: j.step, ingredients: j.ingredients, equipment: j.equipment)
+                    newInstructions.append(model)
+                }
+            }
+            numberOfInstructions = newInstructions
+        }
     }
+    
+    public var numberOfInstructions: [StepArray] = []
+    
+    var onDataFetched: (() -> Void)?
     
     public var title: String{
         detailedRecipe.title.uppercased()
     }
     
-    public func numberOfInstructions() -> Int {
-           return instructions.count
+    init(detailedRecipe: RecipesByIngredients){
+        self.detailedRecipe = detailedRecipe
+    }
+    
+    public func numberOfIns() -> Int {
+        return numberOfInstructions.count
     }
     
     
@@ -43,10 +57,7 @@ final class RecipeDetailViewViewModel{
             switch result{
             case .success(let resultModel):
                 self?.instructions = resultModel
-                
-                self?.onDataUpdated?()
-                
-//                print(self?.instructions[0].steps)
+                //                self?.onDataFetched?()
                 DispatchQueue.main.async {
                     self?.delegate?.didLoad()
                 }
