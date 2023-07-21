@@ -74,7 +74,7 @@ extension PlannerViewController: UICollectionViewDataSource, UICollectionViewDel
         collectionView.deselectItem(at: indexPath, animated: true)
         
         let workOutViewController = WorkOutViewController()
-        workOutViewController.navigationItem.largeTitleDisplayMode = .never
+//        workOutViewController.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(workOutViewController, animated: true)
     }
 }

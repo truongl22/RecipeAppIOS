@@ -27,9 +27,10 @@ class DetailRecipeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(recipeDetailView)
+        setUpView()
+        
         recipeDetailView.recipeInstructionTableView?.delegate = self
         recipeDetailView.recipeInstructionTableView?.dataSource = self
-        setUpView()
         viewModel.delegate = self
         viewModel.fetchRecipesInstructions()
         

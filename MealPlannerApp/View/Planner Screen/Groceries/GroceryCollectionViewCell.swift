@@ -8,9 +8,17 @@
 import UIKit
 
 class GroceryCollectionViewCell: UICollectionViewCell {
-    private let workOutManager = WorkOutManager()
+//    private let workOutManager = WorkOutManager()
     
     static let identifier = "GroceryCollectionViewCell"
+    
+    let groceriesTableViewManager = WorkoutAndGroceriesTableViewManager(
+        viewModels: [GroceriesInfoModel(grocery: "carrot", quantity: "2"),
+                     GroceriesInfoModel(grocery: "apple", quantity: "4"),
+                     GroceriesInfoModel(grocery: "fish", quantity: "3"),
+                     GroceriesInfoModel(grocery: "meat", quantity: "2"),
+                     GroceriesInfoModel(grocery: "pork", quantity: "3"),
+                     GroceriesInfoModel(grocery: "chickend", quantity: "2")])
     
     private var containerView: UIView = {
         let view = UIView()
@@ -38,14 +46,13 @@ class GroceryCollectionViewCell: UICollectionViewCell {
     
     private var groceriesTableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(TodayWorkOutTableViewCell.self, forCellReuseIdentifier: TodayWorkOutTableViewCell.identifier)
+//        tableView.register(TodayWorkOutTableViewCell.self, forCellReuseIdentifier: TodayWorkOutTableViewCell.identifier)
+        tableView.register(WorkoutAndGroceriesTableViewCell<GroceriesInfoModel>.self, forCellReuseIdentifier: String(describing: WorkoutAndGroceriesTableViewCell<GroceriesInfoModel>.self))
         tableView.register(WorkoutHeaderView.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
-//        tableView.backgroundColor = .green
         tableView.layoutMargins = UIEdgeInsets.zero
         tableView.separatorInset = UIEdgeInsets.zero
         tableView.rowHeight = 36
         tableView.isScrollEnabled = false
-
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -56,7 +63,7 @@ class GroceryCollectionViewCell: UICollectionViewCell {
         button.layer.cornerRadius = 6
         button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -90,13 +97,13 @@ class GroceryCollectionViewCell: UICollectionViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
-            groceriesLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
-            groceriesLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            groceriesLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            groceriesLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 2),
+            groceriesLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 2),
+            groceriesLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -2),
             
             dateLabel.topAnchor.constraint(equalTo: groceriesLabel.bottomAnchor, constant: 10),
-            dateLabel.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: groceriesLabel.leadingAnchor),
+            dateLabel.trailingAnchor.constraint(equalTo: groceriesLabel.trailingAnchor),
             
             groceriesTableView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor),
             groceriesTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -105,14 +112,17 @@ class GroceryCollectionViewCell: UICollectionViewCell {
             buttonAddGroceries.topAnchor.constraint(equalTo: groceriesTableView.bottomAnchor),
             buttonAddGroceries.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             buttonAddGroceries.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            buttonAddGroceries.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonAddGroceries.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4),
             
         ])
     }
     
     private func setUpGroceriesTableView(){
-        groceriesTableView.dataSource = workOutManager
-        groceriesTableView.delegate = workOutManager
+//        groceriesTableView.dataSource = workOutManager
+//        groceriesTableView.delegate = workOutManager
+        
+        groceriesTableView.dataSource = groceriesTableViewManager
+        groceriesTableView.delegate = groceriesTableViewManager
     }
     
 

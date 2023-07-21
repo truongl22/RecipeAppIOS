@@ -26,7 +26,7 @@ final class Service{
     ///   - type: type we expect
     ///   - completion: callback with data or error
     public func execute<T: Codable>(_ request: Request, expecting type: T.Type, completion: @escaping (Result<Array<T>, Error>) -> Void){
-        guard var urlRequest = self.request(from: request) else{
+        guard let urlRequest = self.request(from: request) else{
             completion(.failure(errorNoti.CreateRequestError))
             return
         }

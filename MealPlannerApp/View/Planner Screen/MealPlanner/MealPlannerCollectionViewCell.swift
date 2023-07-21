@@ -45,11 +45,11 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
     
     private var buttonAddNewMeal: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Add new Food", for: .normal)
+        button.setTitle("Add New Food", for: .normal)
         button.layer.cornerRadius = 6
         button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
         button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .heavy)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -82,13 +82,13 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
             containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
             
-            mealPlannerLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
-            mealPlannerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            mealPlannerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            mealPlannerLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 2),
+            mealPlannerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 2),
+            mealPlannerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -2),
             
             dateLabel.topAnchor.constraint(equalTo: mealPlannerLabel.bottomAnchor, constant: 10),
-            dateLabel.leadingAnchor.constraint(equalTo: dateLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: dateLabel.trailingAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: mealPlannerLabel.leadingAnchor),
+            dateLabel.trailingAnchor.constraint(equalTo: mealPlannerLabel.trailingAnchor),
             
             mealsCollectionView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
             mealsCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -96,7 +96,7 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
             
             buttonAddNewMeal.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20),
             buttonAddNewMeal.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
-            buttonAddNewMeal.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+            buttonAddNewMeal.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -4),
             
         ])
     }

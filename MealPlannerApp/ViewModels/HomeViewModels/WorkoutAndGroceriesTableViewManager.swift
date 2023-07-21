@@ -1,29 +1,42 @@
 //
-//  WorkOutManager.swift
+//  WorkoutAndGroceriesTableViewManager.swift
 //  MealPlannerApp
 //
-//  Created by Lâm Trương on 7/11/23.
+//  Created by Lâm Trương on 7/20/23.
 //
 
 import Foundation
 import UIKit
 
-final class WorkOutManager: NSObject, UITableViewDelegate, UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+class WorkoutAndGroceriesTableViewManager<ViewModel>: NSObject, UITableViewDataSource, UITableViewDelegate {
+    var viewModels: [ViewModel]
+
+    init(viewModels: [ViewModel]) {
+        self.viewModels = viewModels
     }
-    
+
+    // MARK: - UITableViewDataSource
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModels.count
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: TodayWorkOutTableViewCell.identifier, for: indexPath) as? TodayWorkOutTableViewCell else{
-            fatalError("Unsupported Cell")
-        }
-        cell.layoutMargins = UIEdgeInsets.zero
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: WorkoutAndGroceriesTableViewCell<ViewModel>.self), for: indexPath) as! WorkoutAndGroceriesTableViewCell<ViewModel>
+        cell.configure(with: viewModels[indexPath.row])
         return cell
+    }
+
+    // MARK: - UITableViewDelegate
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Implement any action you want to perform when a cell is selected
+        // For example:
+        // let selectedViewModel = viewModels[indexPath.row]
+        // handleSelection(for: selectedViewModel)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let headerView:UIView =  WorkoutHeaderView()
-//        return headerView
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! WorkoutHeaderView
         tableView.sectionHeaderHeight = 26
  
@@ -39,9 +52,5 @@ final class WorkOutManager: NSObject, UITableViewDelegate, UITableViewDataSource
             // Reset the separator insets for other rows
             cell.separatorInset = UIEdgeInsets.zero
         }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

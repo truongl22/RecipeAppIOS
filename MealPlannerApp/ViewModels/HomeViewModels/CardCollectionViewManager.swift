@@ -8,6 +8,9 @@
 //import Foundation
 //import UIKit
 //
+
+/// Try to put delegate and datasource to viewcontroller instead of view model
+
 //final class CardCollectionViewManager: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
 //    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return 3

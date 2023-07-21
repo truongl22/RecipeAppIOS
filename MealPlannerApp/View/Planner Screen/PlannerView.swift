@@ -7,6 +7,9 @@
 
 import UIKit
 
+
+/// Try to put delegate and datasource to viewcontroller instead of view model
+///
 //class PlannerView: UIView {
 //    private let cardCollectionViewManager = CardCollectionViewManager()
 //
@@ -82,8 +85,6 @@ class PlannerView: UIView {
             cardsCollectionView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor),
             cardsCollectionView.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor),
             cardsCollectionView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-   
-            
         ])
     }
     

@@ -1,15 +1,19 @@
 //
-//  TodayWorkOutTableViewCell.swift
+//  WorkoutAndGroceriesTableViewCell.swift
 //  MealPlannerApp
 //
-//  Created by Lâm Trương on 7/11/23.
+//  Created by Lâm Trương on 7/20/23.
 //
 
 import UIKit
 
-class TodayWorkOutTableViewCell: UITableViewCell {
-    static let identifier = "TodayWorkOutTableViewCell"
-    
+protocol CellConfigurable {
+    associatedtype ViewModel
+    func configure(with viewModel: ViewModel)
+}
+
+class WorkoutAndGroceriesTableViewCell<ViewModel>: UITableViewCell, CellConfigurable {
+
     private var checkButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "checkmark.square.fill")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -24,43 +28,54 @@ class TodayWorkOutTableViewCell: UITableViewCell {
         sender.isSelected = !sender.isSelected
     }
     
-    private var exerciseLabel: UILabel = {
+    private var exerciseAndGroceriesLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.text = "3 x Leg Extension"
         label.textColor = UIColor(red: 0.00, green: 0.12, blue: 0.17, alpha: 1.00)
         return label
     }()
     
-    private var bestSetLabel: UILabel = {
+    private var bestSetAndQuantityLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.text = "45 lb x 4"
         label.textColor = UIColor(red: 0.00, green: 0.12, blue: 0.17, alpha: 1.00)
         return label
     }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubViews(exerciseAndGroceriesLabel, bestSetAndQuantityLabel,checkButton)
+        initConstraints()
+    }
     
     private func initConstraints(){
         
         NSLayoutConstraint.activate([
             checkButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             checkButton.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 4),
-            exerciseLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            exerciseLabel.leftAnchor.constraint(equalTo: checkButton.rightAnchor, constant: 16),
-            bestSetLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
-            bestSetLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
-           
+            exerciseAndGroceriesLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            exerciseAndGroceriesLabel.leftAnchor.constraint(equalTo: checkButton.rightAnchor, constant: 16),
+            bestSetAndQuantityLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            bestSetAndQuantityLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -12),
+            
         ])
         
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?){
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubViews(exerciseLabel, bestSetLabel,checkButton)
-        initConstraints()
+    func configure(with viewModel: ViewModel) {
+        if let workOutViewModel = viewModel as? WorkoutInfoModel {
+            exerciseAndGroceriesLabel.text = workOutViewModel.exercise
+            bestSetAndQuantityLabel.text = workOutViewModel.bestset
+        }
+            
+        else if let groceriesViewModel = viewModel as? GroceriesInfoModel {
+            exerciseAndGroceriesLabel.text = groceriesViewModel.grocery
+            bestSetAndQuantityLabel.text = groceriesViewModel.quantity
+        }
     }
+        
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -69,9 +84,8 @@ class TodayWorkOutTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(false, animated: animated)
     }
-
 }
