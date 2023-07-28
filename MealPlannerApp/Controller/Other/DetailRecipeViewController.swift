@@ -9,10 +9,10 @@ import UIKit
 
 /// a controller that show a detail recipe
 class DetailRecipeViewController: UIViewController {
-    private let viewModel: RecipeDetailViewViewModel
+    private var viewModel: BuildPlanViewViewModel
     private let recipeDetailView = RecipeDetaiView()
     
-    init(viewModel: RecipeDetailViewViewModel){
+    init(viewModel: BuildPlanViewViewModel){
        
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

@@ -12,13 +12,13 @@ class SearchRecipeViewController: UIViewController, UISearchResultsUpdating {
     private var recipe: RecipeModel!{
         didSet{
             for i in recipe.results{
-                let model = SearchRecipesCollectionViewCellViewModel(foodName: i.title , foodImageURL:  URL(string: i.image))
+                let model = BuildPlanViewViewModel(foodName: i.title , foodImageURL:  URL(string: i.image), id: i.id)
                 recipeCellViewModel.append(model)
             }
         }
     }
     
-    private var recipeCellViewModel: [SearchRecipesCollectionViewCellViewModel] = []
+    private var recipeCellViewModel: [BuildPlanViewViewModel] = []
     
     private let searchController: UISearchController = {
         let vc = UISearchController(searchResultsController: SearchResultsViewController())
@@ -108,9 +108,14 @@ extension SearchRecipeViewController: UICollectionViewDataSource, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let recipe = recipe.results[indexPath.row]
-        let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
-        let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
+//        let recipe = recipe.results[indexPath.row]
+//        let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
+//        let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
+//        detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
+//        navigationController?.pushViewController(detailRecipeViewController, animated: true)
+        
+        let recipeViewModel = recipeCellViewModel[indexPath.row]
+        let detailRecipeViewController = DetailRecipeViewController(viewModel: recipeViewModel)
         detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(detailRecipeViewController, animated: true)
     }

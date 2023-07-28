@@ -73,7 +73,7 @@ class SearchResultCollectionViewCell: UICollectionViewCell {
         recipeNameLabel.text = nil
     }
     
-    public func configure(with viewModel: SearchRecipesCollectionViewCellViewModel){
+    public func configure(with viewModel: BuildPlanViewViewModel){
         recipeNameLabel.text = viewModel.foodName
         viewModel.fetchRecipeImage{ [weak self]result in
             switch result {

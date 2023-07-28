@@ -70,8 +70,8 @@ class InstructionHeaderView: UIView {
         ])
     }
     
-    public func configure(with viewModel: RecipeDetailViewViewModel){
-        recipeNameLabel.text = viewModel.title
+    public func configure(with viewModel: BuildPlanViewViewModel){
+        recipeNameLabel.text = viewModel.foodName
         viewModel.fetchRecipeImage{ [weak self]result in
             switch result {
             case .success(let data):
