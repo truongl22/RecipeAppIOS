@@ -10,7 +10,6 @@ import UIKit
 /// a controller that show a detail recipe
 class DetailRecipeViewController: UIViewController {
     private let viewModel: RecipeDetailViewViewModel
-    private var cellHeights: [IndexPath: CGFloat] = [:]
     private let recipeDetailView = RecipeDetaiView()
     
     init(viewModel: RecipeDetailViewViewModel){
@@ -33,15 +32,6 @@ class DetailRecipeViewController: UIViewController {
         recipeDetailView.recipeInstructionTableView?.dataSource = self
         viewModel.delegate = self
         viewModel.fetchRecipesInstructions()
-        
-
-//        viewModel.onDataFetched = { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.recipeDetailView.recipeInstructionTableView?.reloadData()
-//            }
-//        }
-        
-        
     }
     
     
@@ -58,9 +48,6 @@ class DetailRecipeViewController: UIViewController {
 extension DetailRecipeViewController:  UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("ccccc \(viewModel.numberOfIns())")
-        print("dddddd \(viewModel.numberOfInstructions.count)")
-
         return viewModel.numberOfInstructions.count
     }
     
@@ -93,7 +80,7 @@ extension DetailRecipeViewController:  UITableViewDelegate, UITableViewDataSourc
     
 }
 
-extension DetailRecipeViewController:  RecipeDetailViewViewModelProtocol{
+extension DetailRecipeViewController: RecipeDetailViewViewModelProtocol{
     func didLoad() {
         recipeDetailView.recipeInstructionTableView!.reloadData()
     }

@@ -24,11 +24,29 @@ class WorkoutDetailView: UIView {
         return tableView
     }()
     
+    private var textField1: UITextField = {
+        let textFieldName = UITextField()
+        textFieldName.placeholder = "Excercise"
+        textFieldName.keyboardType = .default
+        textFieldName.borderStyle = .roundedRect
+        textFieldName.translatesAutoresizingMaskIntoConstraints = false
+        return textFieldName
+    }()
+    
+    private var textField2: UITextField = {
+        let textFieldName = UITextField()
+        textFieldName.placeholder = "Sets"
+        textFieldName.keyboardType = .default
+        textFieldName.borderStyle = .roundedRect
+        textFieldName.translatesAutoresizingMaskIntoConstraints = false
+        return textFieldName
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
         self.backgroundColor = .secondarySystemBackground
-        addSubViews(workOutScheduleTableView)
+        addSubViews(workOutScheduleTableView, textField1, textField2)
         setUpWorkOutScheduleCollectionView()
         initConstraints()
    
@@ -39,7 +57,14 @@ class WorkoutDetailView: UIView {
             workOutScheduleTableView.topAnchor.constraint(equalTo: self.topAnchor),
             workOutScheduleTableView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
             workOutScheduleTableView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
-            workOutScheduleTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            workOutScheduleTableView.heightAnchor.constraint(equalToConstant: 100),
+//            workOutScheduleTableView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            
+            textField1.topAnchor.constraint(equalTo: workOutScheduleTableView.bottomAnchor, constant: 10),
+            textField1.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            
+            textField2.topAnchor.constraint(equalTo: textField1.bottomAnchor, constant: 10),
+            textField2.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
             
         ])
     }

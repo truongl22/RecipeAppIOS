@@ -14,7 +14,8 @@ protocol RecipeDetailViewViewModelProtocol: AnyObject{
 final class RecipeDetailViewViewModel{
     public weak var delegate: RecipeDetailViewViewModelProtocol?
     
-    private let detailedRecipe: RecipesByIngredients
+//    private let detailedRecipe: RecipesByIngredients
+    private let detailedRecipe: ResultRecipeArray
     
     private var instructions: [RecipeInstructions] = []{
         didSet {
@@ -38,14 +39,13 @@ final class RecipeDetailViewViewModel{
         detailedRecipe.title.uppercased()
     }
     
-    init(detailedRecipe: RecipesByIngredients){
+    init(detailedRecipe: ResultRecipeArray){
         self.detailedRecipe = detailedRecipe
     }
     
     public func numberOfIns() -> Int {
         return numberOfInstructions.count
     }
-    
     
     
     public func fetchRecipesInstructions(){

@@ -128,13 +128,7 @@ class TodayWorkOutCollectionViewCell: UICollectionViewCell{
     static let identifier = "TodayWorkOutCollectionViewCell"
     var WorkoutModels: [WorkoutInfoModel] = [WorkoutInfoModel(exercise: "run", bestset: "yyyy")]
     
-    let workoutAndGroceriesTableViewManager = WorkoutAndGroceriesTableViewManager(
-        viewModels: [WorkoutInfoModel(exercise: "Incline Bench Press", bestset: "45lbs x 4"),
-                     WorkoutInfoModel(exercise: "Close Grip Bench Press", bestset: "50lbs x 4"),
-                     WorkoutInfoModel(exercise: "Dips", bestset: "45lbs x 4"),
-                     WorkoutInfoModel(exercise: "Push up", bestset: "50lbs x 4"),
-                     WorkoutInfoModel(exercise: "Dumbbell Shoulder Press", bestset: "45lbs x 4"),
-                     WorkoutInfoModel(exercise: "Close Grip Bench Press", bestset: "50lbs x 4")])
+    let workoutAndGroceriesTableViewManager = WorkoutAndGroceriesTableViewManager<WorkoutInfoModel>()
     
     //    var personDataSource: WorkoutAndGroceriesTableViewManager<WorkOuttt>!
     

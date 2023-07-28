@@ -49,8 +49,16 @@ import UIKit
 //
 //}
 
+protocol PlannerViewProtocol: AnyObject{
+    func pushScreenWorkOutOrGroceries(view: PlannerView, modelType: String)
+}
+
 class PlannerView: UIView {
     
+    private let workoutAndGroceriesTableViewManager = WorkoutAndGroceriesTableViewManager<Any>()
+    
+    public weak var delegate: PlannerViewProtocol?
+
     var cardsCollectionView: UICollectionView?
     
     private func createCardsCollectionView() -> UICollectionView{
@@ -71,6 +79,7 @@ class PlannerView: UIView {
         let cardsCollectionView = createCardsCollectionView()
         self.cardsCollectionView = cardsCollectionView
         self.addSubViews(cardsCollectionView)
+        workoutAndGroceriesTableViewManager.delegate = self
 
         initConstraints()
    
@@ -92,4 +101,11 @@ class PlannerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
+}
+
+extension PlannerView: WorkoutAndGroceriesTableViewManagerProtocol{
+    func selected(modelType: String) {
+        print("ttttt")
+        delegate?.pushScreenWorkOutOrGroceries(view: self, modelType: modelType)
+    }
 }

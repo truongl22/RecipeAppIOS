@@ -7,7 +7,14 @@
 
 import UIKit
 
-class PlannerViewController: UIViewController {
+class PlannerViewController: UIViewController, PlannerViewProtocol {
+    
+    func pushScreenWorkOutOrGroceries(view: PlannerView, modelType: String) {
+        print("yoyoyo")
+        let workOutViewController = WorkOutViewController()
+        navigationController?.pushViewController(workOutViewController, animated: true)
+    }
+    
     
     private let plannerView = PlannerView()
     
@@ -30,6 +37,7 @@ class PlannerViewController: UIViewController {
             plannerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             plannerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
+        plannerView.delegate = self
     }
 }
 
@@ -66,7 +74,7 @@ extension PlannerViewController: UICollectionViewDataSource, UICollectionViewDel
         let width = (bounds.width - 22)
         return CGSize(
             width: width,
-            height: width * 1.006
+            height: width * 1.3
         )
     }
     

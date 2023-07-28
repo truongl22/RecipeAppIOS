@@ -9,23 +9,136 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private let profileView = ProfileView()
+    private var userRecipeCollectionView: UICollectionView = {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            return ProfileViewController.createSection(for: sectionIndex)
+        }
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.register(FromYourRecipeCollectionViewCell.self, forCellWithReuseIdentifier: FromYourRecipeCollectionViewCell.identifier)
+        collection.register(CuisineCollectionViewCell.self, forCellWithReuseIdentifier: CuisineCollectionViewCell.identifier)
+        collection.register(ProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ProfileHeader.identifier)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
+    
+    private let plusFloatingButton = {
+        let button = UIButton(type: .system)
+        let plussign = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 18, weight: .bold))
+        button.setImage(plussign, for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = UIColor(red: 0.19, green: 0.52, blue: 0.42, alpha: 1.00)
+        button.layer.cornerRadius = 30
+        button.clipsToBounds = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(plusProfileScreenButtonTapped), for: .touchUpInside)
+        
+        button.layer.masksToBounds = false
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOffset = .zero
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.4
+        
+        return button
+    }()
+    
+    @objc func plusProfileScreenButtonTapped(){
+        print("hiiii")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Profile"
         navigationController?.navigationItem.largeTitleDisplayMode = .never
-//        navigationController.navigationItem.largeTitleDisplayMode = .never
-        view.addSubview(profileView)
-        setUpView()
+        view.addSubViews(userRecipeCollectionView, plusFloatingButton)
+        userRecipeCollectionView.pin(to: view)
+        setUpConstraintsForButton()
+        
+        userRecipeCollectionView.delegate = self
+        userRecipeCollectionView.dataSource = self
+        
     }
     
-    private func setUpView(){
+    private func setUpConstraintsForButton(){
         NSLayoutConstraint.activate([
-            profileView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            profileView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            profileView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            profileView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            plusFloatingButton.widthAnchor.constraint(equalToConstant: 60),
+            plusFloatingButton.heightAnchor.constraint(equalToConstant: 60),
+            plusFloatingButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            plusFloatingButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
     }
+}
+
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FromYourRecipeCollectionViewCell.identifier, for: indexPath) as? FromYourRecipeCollectionViewCell else{
+            fatalError("Unsupported Cell")
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView( ofKind: kind, withReuseIdentifier: ProfileHeader.identifier, for: indexPath) as? ProfileHeader, kind == UICollectionView.elementKindSectionHeader else {
+            return UICollectionReusableView()
+        }
+        return header
+    }
+    
+    
+    private static func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection{
+        let supplementaryViews = [ NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(200)),
+            elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)]
+        
+        switch sectionIndex {
+        case 0:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 16, trailing: 8)
+            
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(120)),
+                subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = supplementaryViews
+            section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 8, bottom: 0, trailing: 8)
+            return section
+        case 1:
+            let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(1.0),
+                                                                                  heightDimension: .fractionalHeight(1.0)))
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0)
+            
+            let group = NSCollectionLayoutGroup.horizontal(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(0.45),
+                    heightDimension: .absolute(220)),
+                subitems: [item]
+            )
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .groupPaging
+            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0)
+            section.boundarySupplementaryItems = supplementaryViews
+            return section
+        default:
+            let item = NSCollectionLayoutItem( layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(1.0),
+                                                                                   heightDimension: .fractionalHeight(1.0)))
+            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
+            
+            let group = NSCollectionLayoutGroup.vertical(
+                layoutSize: NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(150)),
+                subitems: [item])
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = supplementaryViews
+            return section
+        }
+    } 
 }

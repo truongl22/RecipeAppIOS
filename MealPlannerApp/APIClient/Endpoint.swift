@@ -12,4 +12,5 @@ import Foundation
     /// Endpoint to find Ingredients
     case findByIngredients
     case analyzedInstructions
+    case complexSearch
 }

@@ -8,13 +8,19 @@
 import Foundation
 import UIKit
 
+protocol WorkoutAndGroceriesTableViewManagerProtocol: AnyObject{
+    func selected(modelType: String)
+}
+
 class WorkoutAndGroceriesTableViewManager<ViewModel>: NSObject, UITableViewDataSource, UITableViewDelegate {
-    var viewModels: [ViewModel]
+    public weak var delegate: WorkoutAndGroceriesTableViewManagerProtocol?
+    
+    var viewModels: [ViewModel] = []
 
-    init(viewModels: [ViewModel]) {
-        self.viewModels = viewModels
-    }
-
+//    init(viewModels: [ViewModel]) {
+//        self.viewModels = viewModels
+//    }
+    
     // MARK: - UITableViewDataSource
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,6 +36,10 @@ class WorkoutAndGroceriesTableViewManager<ViewModel>: NSObject, UITableViewDataS
     // MARK: - UITableViewDelegate
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("t;t;t;t")
+        delegate?.selected(modelType: String(describing: WorkoutAndGroceriesTableViewCell<ViewModel>.self))
+        
         // Implement any action you want to perform when a cell is selected
         // For example:
         // let selectedViewModel = viewModels[indexPath.row]

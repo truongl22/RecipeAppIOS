@@ -12,13 +12,7 @@ class GroceryCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "GroceryCollectionViewCell"
     
-    let groceriesTableViewManager = WorkoutAndGroceriesTableViewManager(
-        viewModels: [GroceriesInfoModel(grocery: "carrot", quantity: "2"),
-                     GroceriesInfoModel(grocery: "apple", quantity: "4"),
-                     GroceriesInfoModel(grocery: "fish", quantity: "3"),
-                     GroceriesInfoModel(grocery: "meat", quantity: "2"),
-                     GroceriesInfoModel(grocery: "pork", quantity: "3"),
-                     GroceriesInfoModel(grocery: "chickend", quantity: "2")])
+    let groceriesTableViewManager = WorkoutAndGroceriesTableViewManager<GroceriesInfoModel>()
     
     private var containerView: UIView = {
         let view = UIView()
@@ -120,7 +114,7 @@ class GroceryCollectionViewCell: UICollectionViewCell {
     private func setUpGroceriesTableView(){
 //        groceriesTableView.dataSource = workOutManager
 //        groceriesTableView.delegate = workOutManager
-        
+        groceriesTableViewManager.viewModels.append(GroceriesInfoModel(grocery: "carrot", quantity: "2"))
         groceriesTableView.dataSource = groceriesTableViewManager
         groceriesTableView.delegate = groceriesTableViewManager
     }

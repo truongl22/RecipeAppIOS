@@ -13,7 +13,6 @@ class RecipeDetaiView: UIView {
     var recipeInstructionTableView: UITableView?
 
     
-    
     private func createrecipeInstructionTableView() -> UITableView{
         let tableView = UITableView(frame: .zero, style: .grouped)
 //        tableView.register(InstructionHeaderView.self, forHeaderFooterViewReuseIdentifier: InstructionHeaderView.identifier)

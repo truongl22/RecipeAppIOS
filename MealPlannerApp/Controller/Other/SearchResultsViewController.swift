@@ -1,18 +1,17 @@
 //
-//  AddNewRecipeViewController.swift
+//  SearchResultsViewController.swift
 //  MealPlannerApp
 //
-//  Created by Lâm Trương on 6/28/23.
+//  Created by Lâm Trương on 7/26/23.
 //
 
 import UIKit
 
-class HealthTrackViewController: UIViewController {
+class SearchResultsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Health Track"
-        navigationController?.navigationBar.prefersLargeTitles = true
+        view.backgroundColor = .systemBackground
 
         // Do any additional setup after loading the view.
     }

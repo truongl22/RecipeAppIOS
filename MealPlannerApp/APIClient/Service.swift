@@ -21,7 +21,7 @@ final class Service{
     
     private init(){}
     
-    /// - Parameters: represent an API call
+    /// - Parameters: represent an API call, decoding array type
     ///   - request: a request created from Request class
     ///   - type: type we expect
     ///   - completion: callback with data or error
@@ -47,6 +47,35 @@ final class Service{
         dataTask.resume()
     }
     
+    
+    /// - Parameters: represent an API call, decoding dictionary type
+    ///   - request: a request created from Request class
+    ///   - type: type we expect
+    ///   - completion: callback with data or error
+    public func executeDictionary<T: Codable>(_ request: Request, expecting type: T.Type, completion: @escaping (Result<T, Error>) -> Void){
+        guard let urlRequest = self.request(from: request) else{
+            completion(.failure(errorNoti.CreateRequestError))
+            return
+        }
+        let dataTask = URLSession.shared.dataTask(with: urlRequest){ data,_, error in
+            guard let data = data, error == nil else{
+                completion(.failure(errorNoti.GetDataError))
+                return
+            }
+            // Decode
+            do{
+                let json = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(json))
+            }
+            catch{
+                completion(.failure(error))
+            }
+        }
+        dataTask.resume()
+    }
+    
+    
+    /// Create an request
     private func request(from foodRequest: Request) -> URLRequest? {
         guard let url = foodRequest.url else {
             return nil

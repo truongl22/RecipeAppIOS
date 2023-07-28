@@ -25,15 +25,6 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private var dateLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.text = "Tuesday, Jul 11"
-        label.textColor = .gray
-        return label
-    }()
-    
     private var mealsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -58,7 +49,7 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(containerView)
         contentView.backgroundColor = .white
-        containerView.addSubViews(mealPlannerLabel,dateLabel,mealsCollectionView, buttonAddNewMeal)
+        containerView.addSubViews(mealPlannerLabel,mealsCollectionView, buttonAddNewMeal)
         styleForCell()
         initConstraints()
 
@@ -86,11 +77,7 @@ class MealPlannerCollectionViewCell: UICollectionViewCell {
             mealPlannerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 2),
             mealPlannerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -2),
             
-            dateLabel.topAnchor.constraint(equalTo: mealPlannerLabel.bottomAnchor, constant: 10),
-            dateLabel.leadingAnchor.constraint(equalTo: mealPlannerLabel.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: mealPlannerLabel.trailingAnchor),
-            
-            mealsCollectionView.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10),
+            mealsCollectionView.topAnchor.constraint(equalTo: mealPlannerLabel.bottomAnchor, constant: 10),
             mealsCollectionView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             mealsCollectionView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             
