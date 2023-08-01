@@ -17,7 +17,13 @@ struct StepArray: Codable{
     let step: String
     let ingredients: [Ingre]
     let equipment: [EquipmentArray]
-   
+    
+    init(number: Int, step: String, ingredients: [Ingre], equipment: [EquipmentArray]) {
+        self.number = number
+        self.step = step
+        self.ingredients = ingredients
+        self.equipment = equipment
+    }
 }
 
 struct EquipmentArray: Codable{

@@ -8,8 +8,11 @@
 import UIKit
 
 enum BrowseSectionType {
-    case fromYourRecipe(viewModels: [BuildPlanViewViewModel]) // 1
-    case cuisine(viewModels: [BuildPlanViewViewModel])// 2
+    case fromYourRecipe(viewModels: [BuildPlanViewViewModel]) // 0
+    case cuisine(viewModels: [BuildPlanViewViewModel])// 1
+    case breakfast(viewModels: [BuildPlanViewViewModel])// 2
+    case maincourse(viewModels: [BuildPlanViewViewModel])// 3
+    case dessert(viewModels: [BuildPlanViewViewModel])// 4
     
     var title: String {
         switch self {
@@ -17,13 +20,19 @@ enum BrowseSectionType {
             return "From Your Recipe"
         case .cuisine:
             return "Cuisine"
+        case .breakfast:
+            return "Breakfast"
+        case .maincourse:
+            return "Maincourse"
+        case .dessert:
+            return "Dessert"
         }
     }
 }
 
 class BuildPlanViewController: UIViewController {
     
-    private var sections = [BrowseSectionType]()
+    internal var sections = [BrowseSectionType]()
     
     private var buildPlanCollectionView: UICollectionView = {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
@@ -51,37 +60,101 @@ class BuildPlanViewController: UIViewController {
         view.addSubViews(buildPlanCollectionView,spinner)
         buildPlanCollectionView.pin(to: view)
         view.backgroundColor = .white
-        fetchRecipes()
+        fetchAllRecipes()
+//        fetchRecipes()
+//        fetchRecipesBreakfast()
         buildPlanCollectionView.delegate = self
         buildPlanCollectionView.dataSource = self
         setupRightBarButton()
     }
     
-    public func fetchRecipes(){
-        var recipeModel: RecipeModel?
-        let query1 = URLQueryItem(name: "cuisine", value: "Vietnamese")
-        let request = Request(endpoint: Endpoint.complexSearch, queryParameters: [query1])
+    public func fetchAllRecipes(){
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        group.enter()
+        group.enter()
         
-        Service.shared.executeDictionary(request, expecting: RecipeModel.self){ [weak self] result in
+        var recipeModelCuisine: RecipeModel?
+        var recipeModelBreakfast: RecipeModel?
+        var recipeModelMainCourse: RecipeModel?
+        var recipeModelDessert: RecipeModel?
+        
+        let requestCuisine = Request(endpoint: Endpoint.complexSearch, queryParameters: [URLQueryItem(name: "cuisine", value: "Vietnamese")])
+        let requestBreakfast = Request(endpoint: Endpoint.complexSearch, queryParameters: [URLQueryItem(name: "type", value: "breakfast")])
+        let requestMainCourse = Request(endpoint: Endpoint.complexSearch, queryParameters: [URLQueryItem(name: "type", value: "maincourse")])
+        let requestDessert = Request(endpoint: Endpoint.complexSearch, queryParameters: [URLQueryItem(name: "type", value: "dessert")])
+        
+        Service.shared.executeDictionary(requestCuisine, expecting: RecipeModel.self){ [weak self] result in
+            defer { group.leave()}
             switch result{
             case .success(let resultModel):
-                recipeModel = resultModel
-                DispatchQueue.main.async {
-                    self?.sections.append(.fromYourRecipe(viewModels: (recipeModel?.results.compactMap({
-                        return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
-                    }))!))
-                    self?.sections.append(.cuisine(viewModels: (recipeModel?.results.compactMap({
-                        return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
-                    }))!))
-                    self?.buildPlanCollectionView.reloadData()
-                }
+                recipeModelCuisine = resultModel
                 break
             case .failure(let error):
                 print(String(describing: error))
             }
         }
         
-        //        section.append(.fromYourRecipe(viewModels: <#T##[BuildPlanViewViewModel]#>))
+        Service.shared.executeDictionary(requestBreakfast, expecting: RecipeModel.self){ [weak self] result in
+            defer { group.leave()}
+            switch result{
+            case .success(let resultModel):
+                recipeModelBreakfast = resultModel
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+        
+        Service.shared.executeDictionary(requestMainCourse, expecting: RecipeModel.self){ [weak self] result in
+            defer { group.leave()}
+            switch result{
+            case .success(let resultModel):
+                recipeModelMainCourse = resultModel
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+        
+        Service.shared.executeDictionary(requestDessert, expecting: RecipeModel.self){ [weak self] result in
+            defer { group.leave()}
+            switch result{
+            case .success(let resultModel):
+                recipeModelDessert = resultModel
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
+        
+        group.notify(queue: .main) {
+            guard let rec = recipeModelCuisine, let cuisine = recipeModelCuisine, let breakfast = recipeModelBreakfast,
+            let maincourse = recipeModelMainCourse, let dessert = recipeModelDessert else {
+                fatalError("Models are nil")
+            }
+            self.configureModels( rec: rec, cuisine: cuisine, breakfast: breakfast, maincourse: maincourse, dessert: dessert)
+        }
+    }
+    
+    private func configureModels(rec: RecipeModel, cuisine: RecipeModel, breakfast: RecipeModel, maincourse: RecipeModel, dessert: RecipeModel){
+        sections.append(.fromYourRecipe(viewModels: (rec.results.compactMap({
+            return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
+        }))))
+        sections.append(.cuisine(viewModels: (cuisine.results.compactMap({
+            return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
+        }))))
+        sections.append(.breakfast(viewModels: (breakfast.results.compactMap({
+            return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
+        }))))
+        sections.append(.maincourse(viewModels: (maincourse.results.compactMap({
+            return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
+        }))))
+        sections.append(.dessert(viewModels: (dessert.results.compactMap({
+            return BuildPlanViewViewModel(foodName: $0.title, foodImageURL: URL(string: $0.image), id: $0.id)
+        }))))
+        buildPlanCollectionView.reloadData()
     }
     
     func setupRightBarButton(){
@@ -93,133 +166,5 @@ class BuildPlanViewController: UIViewController {
     @objc func pushToSearchScreen(){
         let searchRecipeViewController = SearchRecipeViewController()
         navigationController?.pushViewController(searchRecipeViewController, animated: true)
-        
     }
 }
-
-extension BuildPlanViewController: UICollectionViewDelegate, UICollectionViewDataSource{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let type = sections[section]
-        switch type{
-        case .fromYourRecipe(let viewModels):
-            return 4
-        case .cuisine(let viewModels):
-            return viewModels.count
-        }
-    }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let type = sections[indexPath.section]
-        switch type{
-        case .fromYourRecipe(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FromYourRecipeCollectionViewCell.identifier, for: indexPath) as? FromYourRecipeCollectionViewCell else{
-                fatalError("Unsupported Cell")
-            }
-            //            let model = viewModels[indexPath.row]
-            //            cell.configure(with: model)
-            return cell
-        case .cuisine(let viewModels):
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CuisineCollectionViewCell.identifier, for: indexPath) as? CuisineCollectionViewCell else{
-                fatalError("Unsupported Cell")
-            }
-            let model = viewModels[indexPath.row]
-            cell.configure(with: model)
-            return cell
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let type = sections[indexPath.section]
-        switch type{
-        case .fromYourRecipe(let viewModels): break
-            
-        case .cuisine(viewModels: let viewModels):
-            collectionView.deselectItem(at: indexPath, animated: true)
-            let recipe = viewModels[indexPath.row]
-            //        delegate?.selectedRecipe(recipe: recipe)
-            //
-            //
-            //            let viewModel = RecipeDetailViewViewModel(detailedRecipe: recipe)
-            //            let detailRecipeViewController = DetailRecipeViewController(viewModel: viewModel)
-            //            detailRecipeViewController.navigationItem.largeTitleDisplayMode = .never
-            //            navigationController?.pushViewController(detailRecipeViewController, animated: true)
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.dequeueReusableSupplementaryView(
-            ofKind: kind,
-            withReuseIdentifier: HeaderCollectionReusableView.identifier,
-            for: indexPath
-        ) as? HeaderCollectionReusableView, kind == UICollectionView.elementKindSectionHeader else {
-            return UICollectionReusableView()
-        }
-        let section = indexPath.section
-        let title = sections[section].title
-        header.configure(with: title)
-        return header
-    }
-    
-    private static func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection{
-        let supplementaryViews = [
-            NSCollectionLayoutBoundarySupplementaryItem( layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(50)),
-                elementKind: UICollectionView.elementKindSectionHeader,
-                alignment: .top
-            )
-        ]
-        switch sectionIndex {
-        case 0:
-            let item = NSCollectionLayoutItem( layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1.0)))
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 16, trailing: 8)
-            
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(120)),
-                subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = supplementaryViews
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
-            return section
-        case 1:
-            let item = NSCollectionLayoutItem( layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(1.0),
-                                                                                   heightDimension: .fractionalHeight(1.0)))
-            
-            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0)
-            
-            let group = NSCollectionLayoutGroup.horizontal(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(0.45),
-                    heightDimension: .absolute(220)),
-                subitems: [item]
-            )
-            let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .groupPaging
-            section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0)
-            section.boundarySupplementaryItems = supplementaryViews
-            return section
-        default:
-            let item = NSCollectionLayoutItem( layoutSize: NSCollectionLayoutSize( widthDimension: .fractionalWidth(1.0),
-                                                                                   heightDimension: .fractionalHeight(1.0)))
-            item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 10, trailing: 10)
-            let group = NSCollectionLayoutGroup.vertical(
-                layoutSize: NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(150)),
-                subitems: [item])
-            
-            let section = NSCollectionLayoutSection(group: group)
-            section.boundarySupplementaryItems = supplementaryViews
-            return section
-        }
-    }
-}
-
-

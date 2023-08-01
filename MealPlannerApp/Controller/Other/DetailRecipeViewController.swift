@@ -7,10 +7,52 @@
 
 import UIKit
 
+enum Section {
+    case main
+}
+
 /// a controller that show a detail recipe
 class DetailRecipeViewController: UIViewController {
+    private var dataSource: UICollectionViewDiffableDataSource<Section, RecipeInstructionViewViewModel>!
+    private var snapshot: NSDiffableDataSourceSnapshot<Section, RecipeInstructionViewViewModel>!
+    
+    private var instructions: [RecipeInstructions] = []{
+        didSet {
+            var newInstructions: [RecipeInstructionViewViewModel] = []
+            for i in instructions {
+                let arrayStep = i.steps
+                for j in arrayStep {
+                    let model = RecipeInstructionViewViewModel(number: j.number, step: j.step)
+                    newInstructions.append(model)
+                }
+            }
+            numberOfInstructions = newInstructions
+        }
+    }
+    
+    public var numberOfInstructions: [RecipeInstructionViewViewModel] = []
+    
+    private var recipeInstructionsCollectionView: UICollectionView = {
+        let layout = UICollectionLayoutListConfiguration(appearance: .grouped)
+        let listLayout = UICollectionViewCompositionalLayout.list(using: layout)
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: listLayout)
+//        collection.register(HeaderCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderCollectionReusableView.identifier)
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
+    
+    private let cellRegistration = UICollectionView.CellRegistration<UICollectionViewListCell, RecipeInstructionViewViewModel> { (cell, indexPath, item) in
+        
+        var content = cell.defaultContentConfiguration()
+//        content. = item.number
+        content.image = UIImage(systemName: "\(String(item.number)).square")
+        content.text = item.step
+
+        // Assign content configuration to cell
+        cell.contentConfiguration = content
+    }
+    
     private var viewModel: BuildPlanViewViewModel
-    private let recipeDetailView = RecipeDetaiView()
     
     init(viewModel: BuildPlanViewViewModel){
        
@@ -25,64 +67,55 @@ class DetailRecipeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(recipeDetailView)
-        setUpView()
-        
-        recipeDetailView.recipeInstructionTableView?.delegate = self
-        recipeDetailView.recipeInstructionTableView?.dataSource = self
-        viewModel.delegate = self
-        viewModel.fetchRecipesInstructions()
+        view.addSubview(recipeInstructionsCollectionView)
+        recipeInstructionsCollectionView.pin(to: view)
+        recipeInstructionsCollectionView.delegate = self
+        self.fetchRecipesInstructions()
+        setupDataSource()
     }
     
-    
-    private func setUpView(){
-        NSLayoutConstraint.activate([
-            recipeDetailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            recipeDetailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
-            recipeDetailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            recipeDetailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        ])
-    }
-}
-
-extension DetailRecipeViewController:  UITableViewDelegate, UITableViewDataSource{
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfInstructions.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: InstructionTableViewCell.identifier, for: indexPath) as? InstructionTableViewCell else{
-            fatalError("Unsupported Cell")
+    private func setupDataSource(){
+        dataSource = UICollectionViewDiffableDataSource<Section, RecipeInstructionViewViewModel>(collectionView: recipeInstructionsCollectionView) {
+            (collectionView: UICollectionView, indexPath: IndexPath, identifier: RecipeInstructionViewViewModel) -> UICollectionViewCell? in
+            
+            // Dequeue reusable cell using cell registration (Reuse identifier no longer needed)
+            let cell = collectionView.dequeueConfiguredReusableCell(using: self.cellRegistration, for: indexPath, item: identifier)
+            // Configure cell appearance
+            cell.accessories = [.disclosureIndicator()]
+            return cell
         }
-        let model = viewModel.numberOfInstructions[indexPath.row]
-        cell.configure(with: model)
+    }
+    
+    private func setupSnapShot(){
+        snapshot = NSDiffableDataSourceSnapshot<Section, RecipeInstructionViewViewModel>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(numberOfInstructions, toSection: .main)
+        dataSource.apply(snapshot, animatingDifferences: false)
+ 
+    }
+    
+    public func fetchRecipesInstructions(){
+        let id = viewModel.returnStringID()
+        let query = URLQueryItem(name: "id", value: id)
+        let request = Request(endpoint: Endpoint.analyzedInstructions, queryParameters: [query])
         
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: InstructionHeaderView.identifier) as! InstructionHeaderView
-        let headerView = InstructionHeaderView(frame: CGRect(x: 0, y: 0, width: recipeDetailView.bounds.width, height: 450))
-        //        recipeInstructionTableView.tableHeaderView = headerView
-        //
-        headerView.configure(with: viewModel)
-        return headerView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return section == 0 ? 450 : 0
-    }
-    
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//            return 150 // Provide an estimated row height for better performance
-//    }
-    
-}
-
-extension DetailRecipeViewController: RecipeDetailViewViewModelProtocol{
-    func didLoad() {
-        recipeDetailView.recipeInstructionTableView!.reloadData()
+        Service.shared.execute(request, expecting: RecipeInstructions.self){ [weak self] result in
+            switch result{
+            case .success(let resultModel):
+                self?.instructions = resultModel
+                //                self?.onDataFetched?()
+                DispatchQueue.main.async {
+                    self?.setupSnapShot()
+                    self?.recipeInstructionsCollectionView.reloadData()
+                }
+                break
+            case .failure(let error):
+                print(String(describing: error))
+            }
+        }
     }
 }
 
+extension DetailRecipeViewController: UICollectionViewDelegate{
+    
+}

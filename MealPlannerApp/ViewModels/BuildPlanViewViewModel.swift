@@ -22,47 +22,51 @@ final class BuildPlanViewViewModel{
         self.foodName = foodName
         self.foodImageURL = foodImageURL
         self.id = id
-    } 
-    
-    private var instructions: [RecipeInstructions] = []{
-        didSet {
-            var newInstructions: [StepArray] = []
-            for i in instructions {
-                let arrayStep = i.steps
-                for j in arrayStep {
-                    let model = StepArray(number: j.number, step: j.step, ingredients: j.ingredients, equipment: j.equipment)
-                    newInstructions.append(model)
-                }
-            }
-            numberOfInstructions = newInstructions
-        }
     }
     
-    public var numberOfInstructions: [StepArray] = []
-    
-    public func numberOfIns() -> Int {
-        return numberOfInstructions.count
+    public func returnStringID() -> String{
+        return String(id)
     }
     
-    public func fetchRecipesInstructions(){
-        let id = String(id)
-        let query = URLQueryItem(name: "id", value: id)
-        let request = Request(endpoint: Endpoint.analyzedInstructions, queryParameters: [query])
-        
-        Service.shared.execute(request, expecting: RecipeInstructions.self){ [weak self] result in
-            switch result{
-            case .success(let resultModel):
-                self?.instructions = resultModel
-                //                self?.onDataFetched?()
-                DispatchQueue.main.async {
-                    self?.delegate?.didLoad()
-                }
-                break
-            case .failure(let error):
-                print(String(describing: error))
-            }
-        }
-    }
+//    private var instructions: [RecipeInstructions] = []{
+//        didSet {
+//            var newInstructions: [StepArray] = []
+//            for i in instructions {
+//                let arrayStep = i.steps
+//                for j in arrayStep {
+//                    let model = StepArray(number: j.number, step: j.step, ingredients: j.ingredients, equipment: j.equipment)
+//                    newInstructions.append(model)
+//                }
+//            }
+//            numberOfInstructions = newInstructions
+//        }
+//    }
+//
+//    public var numberOfInstructions: [StepArray] = []
+    
+//    public func numberOfIns() -> Int {
+//        return numberOfInstructions.count
+//    }
+    
+//    public func fetchRecipesInstructions(){
+//        let id = String(id)
+//        let query = URLQueryItem(name: "id", value: id)
+//        let request = Request(endpoint: Endpoint.analyzedInstructions, queryParameters: [query])
+//        
+//        Service.shared.execute(request, expecting: RecipeInstructions.self){ [weak self] result in
+//            switch result{
+//            case .success(let resultModel):
+//                self?.instructions = resultModel
+//                //                self?.onDataFetched?()
+//                DispatchQueue.main.async {
+//                    self?.delegate?.didLoad()
+//                }
+//                break
+//            case .failure(let error):
+//                print(String(describing: error))
+//            }
+//        }
+//    }
     
     /// Fetch images to display result of searched recipes
     /// - Parameter completion: <#completion description#>

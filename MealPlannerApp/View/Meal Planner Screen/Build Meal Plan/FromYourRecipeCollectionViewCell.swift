@@ -22,7 +22,6 @@ class FromYourRecipeCollectionViewCell: UICollectionViewCell {
     
     private var mealTitle: UILabel = {
         let label = UILabel()
-        label.text = "Breakfast"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textColor = .black
@@ -49,8 +48,8 @@ class FromYourRecipeCollectionViewCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
     
-    public func configure(with viewModel: BuildPlanViewViewModel){
-        
+    public func configure(with title: String){
+        mealTitle.text = title
     }
     
     required init?(coder: NSCoder) {
