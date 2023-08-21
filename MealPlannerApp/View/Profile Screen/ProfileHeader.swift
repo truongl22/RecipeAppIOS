@@ -48,11 +48,23 @@ class ProfileHeader: UICollectionReusableView {
         return stackView
     }()
     
+    private func configureStackButton(){
+        for (_, button) in sectionStack.arrangedSubviews.enumerated(){
+            guard let button = button as? UIButton else { return }
+            button.addTarget(self, action: #selector(didTabBar(_:)), for: .touchUpInside)
+        }
+    }
+    
+    @objc private func didTabBar(_ sender: UIButton){
+        print(sender.titleLabel?.text ?? "")
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
         addSubViews(imageProfile,userNameLabel,sectionStack)
         initConstraints()
+        configureStackButton()
     }
     
     
