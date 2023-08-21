@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProfileViewController: UIViewController {
     
@@ -56,6 +57,16 @@ class ProfileViewController: UIViewController {
         userRecipeCollectionView.delegate = self
         userRecipeCollectionView.dataSource = self
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Auth.auth().currentUser == nil{
+            let vc = UINavigationController(rootViewController: LoginPageViewController())
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+            
+        }
     }
     
     private func setUpConstraintsForButton(){
